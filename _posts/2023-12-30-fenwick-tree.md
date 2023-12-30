@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "fenwick tree"
-date:   2023-12-30 02:00:00 -0800
+title:  "Fenwick Tree"
+date:   2023-12-30 15:25:00 -0800
 brief: 'a glimpse into competitive programming'
 ---
 
@@ -123,8 +123,8 @@ class Bit:
 Supppose initial array values are `0` and we use previous range update technique to update `v` for range `l...r` for array `A[1...8]`.
 
 now we have an array
-value: `0,0,...,v,...,v,0, ...0  `
-index: `1,2,...,l,...,r,r+1...n-1`
+- value: `0,0,...,v,...,v,0, ...0  `
+- index: `1,2,...,l,...,r,r+1...n-1`
 
 we want to do presum of `i` 
 - if `i < l`: `presum = 0`

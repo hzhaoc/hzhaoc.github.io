@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "shortest path problem"
+title:  "Shortest Path problem"
 date:   2023-12-30 02:00:00 -0800
 brief: 'algorithms from graph theory'
 ---
@@ -74,7 +74,9 @@ Since subpath of a shortest path is by itself a shortest path, for a shortest pa
 - Let $L_{i,v}$ = minimum length of a $s-v$ path with edge number $n\leq{i}$. $l_{i, j}$ = edge length of $e(i, j)$. Cycles allowed. And $+ \infty$ if no such path exists
 	- For $i = 1, 2, ..., n-1$: ($n$ if one (**only one!**) negative cycle existence needs to be checked) 
 		- For $v = 1, 2, ..., n$:
-			- $L_{i,v}=\min\left\begin{matrix} L_{\left( i - 1 \right),\ v} \\ \min_{(w,v) \in E}\left\{ L_{\left( i - 1 \right),w} + l_{w,v} \right\} \\  \end{matrix} \right.\ $
+			- $\begin{matrix}L_{(i-1),v} \\ a \end{matrix}$
+			- $$\begin{matrix}L_{(i-1),v} \\ a \end{matrix}$$
+			- $L_{i,v}=\min\left\begin{matrix} L_{\left( i - 1 \right),\ v} \\ \min_{(w,v) \in E}\left\{ L_{\left( i - 1 \right),w} + l_{w,v} \right\} \\  \end{matrix} \right.\$
 			- meanwhile, keep track of Predecessor pointers $B[i, v]$ = 2nd-last vertex in the shortest path. this will track shortest paths. note that $B[0, v] = null$.
 			- with no negative cycles:  if $L_{i, v}=L_{i-1, v}$ ($v$ is target vertex). This means optimal path is already found for path $s-v$. Can exit early. 
 			- *if only need to check negative cycle: check last iteration (n) and see if there's improvement in distance; if also need to find the negative cycle path: use DFS to check for a cycle of predecessor pointers at every iteration*.

@@ -5,12 +5,12 @@ date:   2023-12-29 22:00:00 -0800
 ---
 
 # Inspiration
-From human brains of neural nets:\
-![brain_neurons](/assets/images/brain_neurons.png)
+From human brains of neural nets\
+![brain_neurons](/assets/images/brain_neurons.png =400x200)
 
 # Structure
 A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.\
-![simple_nn](/assets/images/neural_network.png)
+![simple_nn](/assets/images/neural_network.png =300x150)
 
 # Forward Propagation
 In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
@@ -25,9 +25,6 @@ where
 - $\Theta_{ij}^{(k)}$ is $k_{th}$ layer $i_{th}$ neuron $j_{th}$ coefficient, in the illustration example, $\Theta_{0j}^{(k)}$ is bias / intercept term and $x_0=0$;
 - $h_\Theta(x)$ is the final output, here it's binary 0  or 1.
 
-## FP Intuition
-![nn_fp](/assets/images/nn_fp.png)
-
 # Cost Function
 We know each activation function in the network is a single Logistic Regression who input from last layer neurons, and output to next layer neurons. 
 
@@ -35,7 +32,7 @@ We know each activation function in the network is a single Logistic Regression 
 $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[y_k^{(i)}log(h_\Theta(x^{(i)}))_k + (1-y_k^{(i)})log(1-log(h_\Theta(x^{(i)}))_k)] + \frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{ji}^{(l)})^2$$
 where
 - $K$ is number of classes in output layer (including input and output)
-- $h_\Theta(x^{(i)}))_k$ is the **whole** binary-output function on the $k$-th output class, for the $i$-th training example. (**Not just logistic regression to output to last layer**)
+- $h_\Theta(x^{(i)})_k$ is the **whole** binary-output function on the $k$-th output class, for the $i$-th training example. (**Not just logistic regression to output to last layer**)
 
 **Another form** of cost function without regularization, is as below:
 $$J(\theta)=\frac{1}{2m}\sum_{i}^{m}\sum_{k}^{K}(h_\Theta(x^{(i)})_k-y^{(i)}_k)^2$$
@@ -43,7 +40,7 @@ Same notations.
 
 # Backward Propagation
 ## Notation
-![neural_network2.png](/assets/images/neural_network2.png)
+![neural_network2.png](/assets/images/neural_network2.png =400x200)
 
 Given above 4-layered NN structure, following previous notation customs, we make following notations:
 - $a^{(1)}=x$
@@ -99,20 +96,16 @@ Finally:
 - $D_{ij}^{(l)}:=\frac{1}{m}\Delta_{ij}^{(l)}$  if  $j = 0$ (bias term)
 - $\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=D_{ij}^{(l)}$ <- now you have the gradient
 
-## Intuition
-![nn_bp](/assets/images/nn_bp.png)
+## BP Intuition
+![nn_bp](/assets/images/nn_bp.png =400x200)
 
 Similar intuition from FP, $\delta_{j}^{(l)}$ is the 'error' of cost for $a_{j}^{(l)}$; it's weighted sum from this layer's corresponding $\theta s$ and latter layer's 'errors' multiplied by first derivative of activation function. The gradient for each $\theta$ is the product of latter layer's corresponding error, and this layer's corresponding activation unit value.
 
-## Random Initialization
-Since if $\Theta=0$, gradient update will also be the same, $\Theta$ needs to initialize $\Theta$ with random small values.
-
-# Implementation
-- Loss Function: `torch.nn.CrossEntropyLoss`  works for multiclass classification problem; `torch.nn.BCELoss` may work for multilabel classification or `BCEWITHLOGITSLOSS` + `nn.sigmoid` on output layer, if `input` and `target` doesn't match in shape in `criterion` in torch implementation, may try one-hot encoding. Some references for one-hot encoding impl: [pytorch forum](https://discuss.pytorch.org/t/what-kind-of-loss-is-better-to-use-in-multilabel-classification/32203/2), [a blog](https://jamesmccaffrey.wordpress.com/2020/09/18/pytorch-multi-class-classification-using-the-mseloss-function/), [pytorch forum](https://discuss.pytorch.org/t/what-kind-of-loss-is-better-to-use-in-multilabel-classification/32203)
-
-# Summary
 The key idea of gradient descent to optimize $\Theta$ in neural network for $m$ training samples, is to **understand error term and gradient in backward propagation**
 
+
+## Random Initialization
+Since if $\Theta=0$, gradient update will also be the same, $\Theta$ needs to initialize $\Theta$ with random small values.
 
 
 [^1]: [Michael Nielsen, *Neural Networks and Deep Learning, 2.4, 2.5*](http://neuralnetworksanddeeplearning.com/)

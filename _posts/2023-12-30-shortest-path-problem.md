@@ -2,7 +2,7 @@
 layout: post
 title:  "shortest path problem"
 date:   2023-12-30 02:00:00 -0800
-brief: 'computer algorithms from graph theory'
+brief: 'algorithms from graph theory'
 ---
 
 Find shortest path and distance in a directed/undirected graph {vertex, edge}

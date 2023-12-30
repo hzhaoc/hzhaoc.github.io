@@ -2,7 +2,7 @@
 layout: post
 title:  "principal of neural network"
 date:   2023-12-29 22:00:00 -0800
-brief: 'a physically-over-simplifed and engineering-complicated computer approximation of human mind'
+brief: 'a physics-wise over-simplifed and engineering-wise complicated computational approximation of human mind'
 ---
 
 ## Inspiration

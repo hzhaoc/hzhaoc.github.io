@@ -16,7 +16,9 @@ A basic structure of neural network is 1 input layer, certain number of hidden l
 # the binary property in the AI world
 
 ## Sigmoid Function
+
 $$h_\theta(X)=g(\theta^TX)=\frac{1}{1+e^{-\theta^TX}}=\frac{1}{1+e^{-z}}=P(y=1|x)$$
+
 \
 where
 \
@@ -39,6 +41,7 @@ log both sides:
 
 total cost is to maximize 
 - $$l(\theta)$$ 
+
 \
 or to minimize
 - $$J(\theta)=-\frac{1}{m}l(\theta)$$
@@ -156,7 +159,8 @@ derivation:
 **Be careful with the sum here because of the sum of error forms in Cost Function**
 
 Thus vectorwise we have:
-$\delta^{(l)}=(\Theta^{(l)})^T\delta^{(l+1)}.*g'(z^{(l)})$
+- $\delta^{(l)}=(\Theta^{(l)})^T\delta^{(l+1)}.*g'(z^{(l)})$
+\
 where $z$ is activation function for each neuron / unit
 
 ### Backward propagation computation process

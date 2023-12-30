@@ -24,47 +24,37 @@ $$z=\theta^TX$$
 ![sigmoid](/assets/images/sigmoid.png)
 
 ### Cost Function
-$$J(\theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\theta(X^{(i)}), y^{(i)})$$
-\
-$$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)} * log(h_\theta(X^{(i)})) + (1-y^{(i)}) * log(1-h_\theta(X^{(i)}))]$$
-\
+- $$J(\theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\theta(X^{(i)}), y^{(i)})$$
+- $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)} * log(h_\theta(X^{(i)})) + (1-y^{(i)}) * log(1-h_\theta(X^{(i)}))]$$
+
 #### Proof with MLE (maximum likelihood estimation)
 According to likelihood:
-\
-$$L(\theta)=\prod_{i=1}^{m}P(y^{(i)}|X^{(i)})$$
-\
+- $$L(\theta)=\prod_{i=1}^{m}P(y^{(i)}|X^{(i)})$$
+
 obviously (Bernoulli Distribution)
-\
-$$L(\theta)=\prod_{i=1}^{m}[h_{\theta}(X^{(i)})^{y^{(i)}}(1-h_{\theta}(X^{(i)}))^{1-y^{(i)}}]$$
-\
+- $$L(\theta)=\prod_{i=1}^{m}[h_{\theta}(X^{(i)})^{y^{(i)}}(1-h_{\theta}(X^{(i)}))^{1-y^{(i)}}]$$
+
 log both sides:\
-$$l(\theta)=\sum_{i=1}^{m}[y^{(i)}*log(h_{\theta}(X^{(i)})) + (1-y^{(i)})*log(1-h_{\theta}(X^{(i)}))]$$
-\
-total cost is to maximize
-\
-$$l(\theta)$$
-\
-or to minimize \
-$$J(\theta)=-\frac{1}{m}l(\theta)$$
-\
+- $$l(\theta)=\sum_{i=1}^{m}[y^{(i)}*log(h_{\theta}(X^{(i)})) + (1-y^{(i)})*log(1-h_{\theta}(X^{(i)}))]$$
+
+total cost is to maximize 
+- $$l(\theta)$$ 
+or to minimize
+- $$J(\theta)=-\frac{1}{m}l(\theta)$$
 
 ### Gradient Descent
 if negative log-likelihood is: (just a different form from above $J(\theta)$)
-\
-$$NLL\left (D, \mathbf{w} \right ) = -\sum_{i=1}^{N} \left [ \left ( 1 - y_i \right ) \log(1-\sigma(\mathbf{w}^T\mathbf{x}_i)) + y_i\log \sigma(\mathbf{w}^T\mathbf{x}_i)  \right ]$$
-\
+- $$NLL\left (D, \mathbf{w} \right ) = -\sum_{i=1}^{N} \left [ \left ( 1 - y_i \right ) \log(1-\sigma(\mathbf{w}^T\mathbf{x}_i)) + y_i\log \sigma(\mathbf{w}^T\mathbf{x}_i)  \right ]$$
+
 gradient descent process is 
-\
-$$\mathbf{w_t} = \mathbf{w_{t-1}} - \eta\frac{\mathrm{d}NLL(D, \mathbf{w})}{\mathrm{d}\mathbf{w}}$$
-\
+- $$\mathbf{w_t} = \mathbf{w_{t-1}} - \eta\frac{\mathrm{d}NLL(D, \mathbf{w})}{\mathrm{d}\mathbf{w}}$$
+
 gradient is 
-\
-$$\eta\frac{\mathrm{d}NLL(D, \mathbf{w})}{\mathrm{d}\mathbf{w}}$$
-\
+- $$\eta\frac{\mathrm{d}NLL(D, \mathbf{w})}{\mathrm{d}\mathbf{w}}$$
+
 where 
-\
-$\eta$ is the learning rate
-\
+- $\eta$ is the learning rate
+
 then $\forall\mathbf{w}_j \in [1, 2, ..., m]$:\
 $$\frac{\partial NLL(D, W)}{\partial{W}_j}= -\frac{\partial\sum_{i=1}^{n}[(1-y_i)log(1-\sigma(W^TX_i)) + y_ilog\sigma(W^TX_i)]}{\partial{W}_j}$$
 \

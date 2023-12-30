@@ -49,12 +49,18 @@ $\eta$ is the learning rate
 
 then $\forall\mathbf{w}_j \in [1, 2, ..., m]$:
 
-$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\frac{\partial\sum_{i=1}^{n}[(1-y_i)log(1-\sigma(\mathbf{W}^TX_i)) + y_ilog\sigma(\mathbf{W}^TX_i)]}{\partial\mathbf{W}_j}$
+$\frac{\partial NLL(D, W)}{\partial{W}_j}= -\frac{\partial\sum_{i=1}^{n}[(1-y_i)log(1-\sigma(W^TX_i)) + y_ilog\sigma(W^TX_i)]}{\partial{W}_j}$
+
 $\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)}\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}}]$
+
 $\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}]\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}}$
+
 $\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}]\sigma(\mathbf{W}^TX_i)(1-\sigma(\mathbf{W}^TX_i))\frac{\partial\mathbf{W}^TX}{\partial\mathbf{W_j}}$
+
 $\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)(1-\sigma(\mathbf{W}^TX_i)) - (1-y_i)(\sigma(\mathbf{W}^TX_i))]X_i^j$
+
 $\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[y_i - \sigma(\mathbf{W}^TX_i)]X_i^j$
+
 $\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= \sum_{i=1}^{n}[\sigma(\mathbf{W}^TX_i) - y_i]X_i^j$
 
 where 

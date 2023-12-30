@@ -17,7 +17,7 @@ plugins:
 paginate: 50
 paginate_path: /page-:num
 
-disqus-id: hzhaoc
+# disqus-id: hzhaoc
 
 source: .
 destination: ./_site

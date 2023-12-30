@@ -75,8 +75,8 @@ $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[y_i 
 \
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= \sum_{i=1}^{n}[\sigma(\mathbf{W}^TX_i) - y_i]X_i^j$$
 \
+
 where 
-\
 - $X_i^j$ denotes $j$th feature of the $i$th patient training vector.
 - $\mathbf{W}$ is coefficient vector.
 
@@ -96,6 +96,7 @@ Formally, the forward propagation does the following:
 - $a_2^{(2)}=g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3)$
 - $a_3^{(2)}=g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3)$
 - $h_\Theta(x)=g(\Theta_{10}^{(2)}a_0^{2} + \Theta_{11}^{(2)}a_1^{2} + \Theta_{12}^{(2)}a_2^{2} + \Theta_{13}^{(2)}a_3^{2})$
+
 \
 where
 - $a_{i}^{(j)}$ is $j_{th}$ layer $i_{th}$ activation neuron;
@@ -107,6 +108,7 @@ We know each activation function in the network is a single Logistic Regression 
 
 **One form** of cost function, for a multiclass neural network, total cost including L2 Norm is:
 - $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[y_k^{(i)}log(h_\Theta(x^{(i)}))_k + (1-y_k^{(i)})log(1-log(h_\Theta(x^{(i)}))_k)] + \frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{ji}^{(l)})^2$$
+
 \
 where
 - $K$ is number of classes in output layer (including input and output)
@@ -114,6 +116,7 @@ where
 
 **Another form** of cost function without regularization, is as below:
 - $$J(\theta)=\frac{1}{2m}\sum_{i}^{m}\sum_{k}^{K}(h_\Theta(x^{(i)})_k-y^{(i)}_k)^2$$
+
 \
 Same notations.
 
@@ -146,7 +149,9 @@ For each output unit ($.*$ is element wise vector multiplication, here are all v
 1. $$\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=a_j^{(l)}\delta_i^{(l+1)}$$ 
 
 derivation (ignore regularization):
-- $\frac{\partial{L}}{\partial{\Theta_{ij}^{(l)}}}=\frac{\partial{L}}{\partial{z_{i}^{(l)}}}\frac{\partial{z_{i}^{(l)}}}{\partial{\Theta_{ij}^{(l)}}}=\delta_i^{(l)}a_j^{(l-1)}$
+
+$\frac{\partial{L}}{\partial{\Theta_{ij}^{(l)}}}=\frac{\partial{L}}{\partial{z_{i}^{(l)}}}\frac{\partial{z_{i}^{(l)}}}{\partial{\Theta_{ij}^{(l)}}}=\delta_i^{(l)}a_j^{(l-1)}$
+
 
 2. $$\delta_{j}^{(l)}=\frac{\partial}{\partial{z_{j}^{(l)}}}cost(i)=[(\delta^{(l+1)})^T\Theta_j^{(l)}]g'(z_j^l)$$
 

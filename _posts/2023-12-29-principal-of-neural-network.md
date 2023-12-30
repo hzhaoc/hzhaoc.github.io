@@ -6,7 +6,7 @@ date:   2023-12-29 23:22:40 +0300
 
 # Inspiration
 From human brains of neural nets:
-![brain_neurons.png](/assets/images/brain_neurons.png)
+![brain_neurons](/assets/images/brain_neurons.png)
 
 # Structure
 A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.

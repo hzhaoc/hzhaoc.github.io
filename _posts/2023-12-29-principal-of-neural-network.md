@@ -1,16 +1,16 @@
 ---
 layout: post
 title:  "principal of neural network"
-date:   2023-12-29 23:22:40 +0300
+date:   2023-12-29 22:00:00 -0800
 ---
 
 # Inspiration
-From human brains of neural nets:
+From human brains of neural nets:\
 ![brain_neurons](/assets/images/brain_neurons.png)
 
 # Structure
-A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.
-![[neural_network.png]]
+A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.\
+![simple_nn](/assets/images/neural_network.png)
 
 # Forward Propagation
 In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
@@ -26,12 +26,12 @@ where
 - $h_\Theta(x)$ is the final output, here it's binary 0  or 1.
 
 ## FP Intuition
-![[nn_fp.png]]
+![nn_fp](/assets/images/nn_fp.png)
 
 # Cost Function
-We know each activation function in the network is a single [[Logistic Regression]] who input from last layer neurons, and output to next layer neurons. 
+We know each activation function in the network is a single Logistic Regression who input from last layer neurons, and output to next layer neurons. 
 
-**One form** of cost function, for a multiclass neural network, total cost including L2 [[Norm]] is:
+**One form** of cost function, for a multiclass neural network, total cost including L2 Norm is:
 $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[y_k^{(i)}log(h_\Theta(x^{(i)}))_k + (1-y_k^{(i)})log(1-log(h_\Theta(x^{(i)}))_k)] + \frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{ji}^{(l)})^2$$
 where
 - $K$ is number of classes in output layer (including input and output)
@@ -43,8 +43,9 @@ Same notations.
 
 # Backward Propagation
 ## Notation
-![[neural_network2.png]]
-Given above NN structure, denote, refer to [[Logistic Regression]]:
+![neural_network2.png](/assets/images/neural_network2.png)
+
+Given above 4-layered NN structure, following previous notation customs, we make following notations:
 - $a^{(1)}=x$
 - $z^{(2)}=\Theta^{(1)}a^{(1)}$
 - $a^{(2)}=g(z(^{(2)}))$
@@ -59,7 +60,8 @@ Intuition: $\delta_j^{(l)}$ is the 'error' of node $j$ in layer $l$.
 
 For each output unit ($.*$ is element wise vector multiplication, here are all vector form):
 - $\delta^{(4)}=a^{(4)}-y$
-- $\delta^{(3)}=(\Theta^{(3)})^T\delta^{(4)}.*g'(z^{(3)})$ where $g'(z^{(3)})=a^{(3)}.*(1-a^{(3)})$ for logistic regression
+- $\delta^{(3)}=(\Theta^{(3)})^T\delta^{(4)}.*g'(z^{(3)})$ 
+  - where $g'(z^{(3)})=a^{(3)}.*(1-a^{(3)})$ for logistic regression
 - $\delta^{(2)}=(\Theta^{(2)})^T\delta^{(3)}.*g'(z^{(2)})$
 - No $\delta^{(1)}$
 
@@ -98,18 +100,15 @@ Finally:
 - $\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=D_{ij}^{(l)}$ <- now you have the gradient
 
 ## Intuition
-![[nn_bp.png]]
+![nn_bp](/assets/images/nn_bp.png)
+
 Similar intuition from FP, $\delta_{j}^{(l)}$ is the 'error' of cost for $a_{j}^{(l)}$; it's weighted sum from this layer's corresponding $\theta s$ and latter layer's 'errors' multiplied by first derivative of activation function. The gradient for each $\theta$ is the product of latter layer's corresponding error, and this layer's corresponding activation unit value.
 
 ## Random Initialization
-Because if $\Theta=0$, gradient update will also be the same. So $\Theta$ needs to initialize $\Theta$ with random small values.
+Since if $\Theta=0$, gradient update will also be the same, $\Theta$ needs to initialize $\Theta$ with random small values.
 
 # Implementation
-- [Pytorch NN example](https://github.com/ast0414/CSE6250BDH-LAB-DL/blob/master/1_FeedforwardNet.ipynb)
 - Loss Function: `torch.nn.CrossEntropyLoss`  works for multiclass classification problem; `torch.nn.BCELoss` may work for multilabel classification or `BCEWITHLOGITSLOSS` + `nn.sigmoid` on output layer, if `input` and `target` doesn't match in shape in `criterion` in torch implementation, may try one-hot encoding. Some references for one-hot encoding impl: [pytorch forum](https://discuss.pytorch.org/t/what-kind-of-loss-is-better-to-use-in-multilabel-classification/32203/2), [a blog](https://jamesmccaffrey.wordpress.com/2020/09/18/pytorch-multi-class-classification-using-the-mseloss-function/), [pytorch forum](https://discuss.pytorch.org/t/what-kind-of-loss-is-better-to-use-in-multilabel-classification/32203)
-
-# Other activation functions
-![[nn_activate_func.png]]
 
 # Summary
 The key idea of gradient descent to optimize $\Theta$ in neural network for $m$ training samples, is to **understand error term and gradient in backward propagation**

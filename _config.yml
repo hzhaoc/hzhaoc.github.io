@@ -14,7 +14,7 @@ kramdown:
 
 plugins:
   - jekyll-paginate
-paginate: 10
+paginate: 50
 paginate_path: /page-:num
 
 #disqus-id: your-disqus-id

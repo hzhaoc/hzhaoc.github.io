@@ -13,7 +13,7 @@ A basic structure of neural network is 1 input layer, certain number of hidden l
 ![[neural_network.png]]
 
 # Forward Propagation
-In the above example, each layer of activation neurons (input can be viewed as the \(0_{th}\) layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
+In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
 
 Formally, the forward propagation does the following:
 $$a_1^{(2)}=g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3)$$

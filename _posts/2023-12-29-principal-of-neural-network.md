@@ -2,6 +2,7 @@
 layout: post
 title:  "principal of neural network"
 date:   2023-12-29 22:00:00 -0800
+brief: 'inspired from neural net in human brain'
 ---
 
 # Inspiration

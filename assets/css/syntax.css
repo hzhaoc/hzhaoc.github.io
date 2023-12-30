@@ -58,7 +58,37 @@
 .codehilite .vg { color: #008080 } /* Name.Variable.Global */
 .codehilite .vi { color: #008080 } /* Name.Variable.Instance */
 .codehilite .il { color: #009999 } /* Literal.Number.Integer.Long */
-.href a:link    {color:#000;}  /* unvisited link  */
-.href a:visited {color:#000;}  /* visited link    */
-.href a:hover   {color:#000;}  /* mouse over link */
-.href a:active  {color:#000;}  /* selected link   */ 
+#class {
+	font-family: "Brush Script MT";
+	font-size: 22px;
+	font-weight: bold;
+	color: #000000 !important;
+	text-decoration: underline;
+}
+#class a:link {
+	font-family: "Brush Script MT";
+	font-size: 22px;
+	color: #000000 !important;
+	font-weight: bold;
+	text-decoration: underline;
+}
+#class a:hover {
+	font-family: "Brush Script MT";
+	font-size: 22px;
+	color: #00C;
+	font-weight: bold;
+	text-decoration: underline;
+}
+#class a:active {
+	font-family: "Brush Script MT";
+	font-size: 22px;
+	color: #00C;
+	font-weight: bold;
+	text-decoration: underline;
+}
+#class a:visited {
+	font-family: "Brush Script MT";
+	font-size: 22px;
+	font-weight: bold;
+	text-decoration: underline;
+}

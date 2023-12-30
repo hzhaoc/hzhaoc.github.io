@@ -5,17 +5,12 @@ date:   2023-12-29 22:00:00 -0800
 brief: 'a physically-over-simplifed and engineering-complicated computer approximation of human mind'
 ---
 
-# Inspiration
+## Inspiration
 From human brains of neural nets\
 ![brain_neurons](/assets/images/brain_neurons.png)
 
-# Structure
-A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.\
-![simple_nn](/assets/images/neural_network.png)
-
-# the binary property in the AI world
-
-## Sigmoid Function
+## The binary property in the AI world
+### Sigmoid Function
 
 $$h_\theta(X)=g(\theta^TX)=\frac{1}{1+e^{-\theta^TX}}=\frac{1}{1+e^{-z}}=P(y=1|x)$$
 
@@ -25,11 +20,11 @@ where
 $$z=\theta^TX$$
 ![sigmoid](/assets/images/sigmoid.png)
 
-### Cost Function
+#### Cost Function
 - $$J(\theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\theta(X^{(i)}), y^{(i)})$$
 - $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)} * log(h_\theta(X^{(i)})) + (1-y^{(i)}) * log(1-h_\theta(X^{(i)}))]$$
 
-#### Proof with MLE (maximum likelihood estimation)
+#### MLE (maximum likelihood estimation)
 According to likelihood:
 - $$L(\theta)=\prod_{i=1}^{m}P(y^{(i)}|X^{(i)})$$
 
@@ -46,7 +41,7 @@ total cost is to maximize
 or to minimize
 - $$J(\theta)=-\frac{1}{m}l(\theta)$$
 
-### Gradient Descent
+#### Gradient Descent
 if negative log-likelihood is: (just a different form from above $J(\theta)$)
 - $$NLL\left (D, \mathbf{w} \right ) = -\sum_{i=1}^{N} \left [ \left ( 1 - y_i \right ) \log(1-\sigma(\mathbf{w}^T\mathbf{x}_i)) + y_i\log \sigma(\mathbf{w}^T\mathbf{x}_i)  \right ]$$
 
@@ -88,7 +83,11 @@ with L2 Norm regularization ($J= NLL + \mu\Vert{\mathbf{W}}\Vert_2^2$), SGD is:
 - $$\mathbf{w_{t}} = (1-2\eta\mu)\mathbf{w_{t-1}} - \eta(\sigma(\mathbf{w}^T\mathbf{x}_t) - y_t)\mathbf{x}_t$$
 
 
-# Neural Network Forward Propagation
+## Neural Network Basic Form
+A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.\
+![simple_nn](/assets/images/neural_network.png)
+
+## Neural Network Forward Propagation
 In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
 
 Formally, the forward propagation does the following:
@@ -103,7 +102,7 @@ where
 - $\Theta_{ij}^{(k)}$ is $k_{th}$ layer $i_{th}$ neuron $j_{th}$ coefficient, in the illustration example, $\Theta_{0j}^{(k)}$ is bias / intercept term and $x_0=0$;
 - $h_\Theta(x)$ is the final output, here it's binary 0  or 1.
 
-## Cost Function
+#### Cost Function
 We know each activation function in the network is a single Logistic Regression who input from last layer neurons, and output to next layer neurons. 
 
 **One form** of cost function, for a multiclass neural network, total cost including L2 Norm is:
@@ -120,8 +119,8 @@ where
 \
 Same notations.
 
-# Backward Propagation
-## Notation
+## Backward Propagation
+#### Notation
 ![neural_network2.png](/assets/images/neural_network2.png)
 
 Given above 4-layered NN structure, following previous notation customs, we make following notations:
@@ -133,8 +132,8 @@ Given above 4-layered NN structure, following previous notation customs, we make
 - $z^{(4)}=\Theta^{(3)}a^{(3)}$
 - $a^{(4)}=g(z(^{(4)}))=h_\Theta(x)$
 
-## Gradient Computation
-### 'Error' term
+### Gradient Computation
+#### 'Error' term
 Intuition: $\delta_j^{(l)}$ is the 'error' of node $j$ in layer $l$.
 
 For each output unit ($.*$ is element wise vector multiplication, here are all vector form):
@@ -145,7 +144,7 @@ For each output unit ($.*$ is element wise vector multiplication, here are all v
 - No $\delta^{(1)}$
 
 
-### Gradient Derivation [^1]
+#### Gradient Derivation [^1]
 1. $$\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=a_j^{(l)}\delta_i^{(l+1)}$$ 
 
 derivation (ignore regularization):
@@ -168,7 +167,7 @@ Thus vectorwise we have:
 \
 where $z$ is activation function for each neuron / unit
 
-### Backward propagation computation process
+#### Backward propagation computation process
 Set $\Delta_{ij}^{(l)}=0$ as error vectors for all layers
 For $i=1$ to $m$:
 - Set $a^{(1)}=x^{i}$
@@ -181,15 +180,14 @@ Finally:
 - $D_{ij}^{(l)}:=\frac{1}{m}\Delta_{ij}^{(l)}$  if  $j = 0$ (bias term)
 - $\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=D_{ij}^{(l)}$ <- now you have the gradient
 
-## BP Intuition
+#### BP Intuition
 ![nn_bp](/assets/images/nn_bp.png)
 
 Similar intuition from FP, $\delta_{j}^{(l)}$ is the 'error' of cost for $a_{j}^{(l)}$; it's weighted sum from this layer's corresponding $\theta s$ and latter layer's 'errors' multiplied by first derivative of activation function. The gradient for each $\theta$ is the product of latter layer's corresponding error, and this layer's corresponding activation unit value.
 
 The key idea of gradient descent to optimize $\Theta$ in neural network for $m$ training samples, is to **understand error term and gradient in backward propagation**
 
-
-## Random Initialization
+#### Random Initialization
 Since if $\Theta=0$, gradient update will also be the same, $\Theta$ needs to initialize $\Theta$ with random small values.
 
 

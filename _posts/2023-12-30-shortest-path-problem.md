@@ -74,7 +74,7 @@ Since subpath of a shortest path is by itself a shortest path, for a shortest pa
 - Let $L_{i,v}$ = minimum length of a $s-v$ path with edge number $n\leq{i}$. $l_{i, j}$ = edge length of $e(i, j)$. Cycles allowed. And $+ \infty$ if no such path exists
 	- For $i = 1, 2, ..., n-1$: ($n$ if one (**only one!**) negative cycle existence needs to be checked) 
 		- For $v = 1, 2, ..., n$:
-			- $L_{i,v}=\min\left\{ \begin{matrix} L_{\left( i - 1 \right),\ v} \\ \min_{(w,v) \in E}\left\{ L_{\left( i - 1 \right),w} + l_{w,v} \right\} \\  \end{matrix} \right.\ $
+			- $L_{i,v}=\min\left\begin{matrix} L_{\left( i - 1 \right),\ v} \\ \min_{(w,v) \in E}\left\{ L_{\left( i - 1 \right),w} + l_{w,v} \right\} \\  \end{matrix} \right.\ $
 			- meanwhile, keep track of Predecessor pointers $B[i, v]$ = 2nd-last vertex in the shortest path. this will track shortest paths. note that $B[0, v] = null$.
 			- with no negative cycles:  if $L_{i, v}=L_{i-1, v}$ ($v$ is target vertex). This means optimal path is already found for path $s-v$. Can exit early. 
 			- *if only need to check negative cycle: check last iteration (n) and see if there's improvement in distance; if also need to find the negative cycle path: use DFS to check for a cycle of predecessor pointers at every iteration*.
@@ -209,7 +209,7 @@ running time wise, n\*Dijkstra is better than n\*Bellman Ford, but Dijkstra can 
 	- $O(n^2m)$ for n\*Bellman Ford
 	- $O(nmlogn)$ for n\*Dijkstra
 	- $O(n^3)$ for Floyd-Warshall
-	
+
 #### Core idea
 Reweight edge costs **in a way** that makes:
 - there's no negative edges, so we can use Dijkstra which is fast in sparse graph

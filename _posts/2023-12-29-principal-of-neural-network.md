@@ -13,9 +13,9 @@ From human brains of neural nets\
 A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.\
 ![simple_nn](/assets/images/neural_network.png)
 
-# The essence of binary property in the AI world
+# the binary property in the AI world
 
-## Sigmoid function
+## Sigmoid Function
 $$h_\theta(X)=g(\theta^TX)=\frac{1}{1+e^{-\theta^TX}}=\frac{1}{1+e^{-z}}=P(y=1|x)$$
 where
 $$z=\theta^TX$$
@@ -49,11 +49,17 @@ $\eta$ is the learning rate
 
 then $\forall\mathbf{w}_j \in [1, 2, ..., m]$:\
 $$\frac{\partial NLL(D, W)}{\partial{W}_j}= -\frac{\partial\sum_{i=1}^{n}[(1-y_i)log(1-\sigma(W^TX_i)) + y_ilog\sigma(W^TX_i)]}{\partial{W}_j}$$
+\
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)}\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}}]$$
+\
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}]\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}}$$
+\
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}]\sigma(\mathbf{W}^TX_i)(1-\sigma(\mathbf{W}^TX_i))\frac{\partial\mathbf{W}^TX}{\partial\mathbf{W_j}}$$
+\
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)(1-\sigma(\mathbf{W}^TX_i)) - (1-y_i)(\sigma(\mathbf{W}^TX_i))]X_i^j$$
+\
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[y_i - \sigma(\mathbf{W}^TX_i)]X_i^j$$
+\
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= \sum_{i=1}^{n}[\sigma(\mathbf{W}^TX_i) - y_i]X_i^j$$
 
 where 
@@ -80,7 +86,7 @@ where
 - $\Theta_{ij}^{(k)}$ is $k_{th}$ layer $i_{th}$ neuron $j_{th}$ coefficient, in the illustration example, $\Theta_{0j}^{(k)}$ is bias / intercept term and $x_0=0$;
 - $h_\Theta(x)$ is the final output, here it's binary 0  or 1.
 
-# Cost Function
+## Cost Function
 We know each activation function in the network is a single Logistic Regression who input from last layer neurons, and output to next layer neurons. 
 
 **One form** of cost function, for a multiclass neural network, total cost including L2 Norm is:

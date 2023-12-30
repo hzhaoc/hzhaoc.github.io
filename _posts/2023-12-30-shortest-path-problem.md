@@ -74,8 +74,8 @@ Since subpath of a shortest path is by itself a shortest path, for a shortest pa
 - Let $L_{i,v}$ = minimum length of a $s-v$ path with edge number $n\leq{i}$. $l_{i, j}$ = edge length of $e(i, j)$. Cycles allowed. And $+ \infty$ if no such path exists
 	- For $i = 1, 2, ..., n-1$: ($n$ if one (**only one!**) negative cycle existence needs to be checked) 
 		- For $v = 1, 2, ..., n$:
-			- $$\begin{matrix}L_{(i-1),v} \\ a \end{matrix}$$
-			- $$L_{i,v}=\min\begin{matrix}L_{(i-1),v} \\ \min_((w,v) \in E)\{L_{(i-1),w} + l_{w,v}\} \end{matrix}$$
+			- $$L_{i,v}=\min\{\begin{matrix}L_{(i-1),v} \\ \min_{(w,v) \in E}\{L_{(i-1),w} + l_{w,v}\} \\ \end{matrix}$$
+			- $$L_{i,v}=\min\left\{\begin{matrix}L_{(i-1),v} \\ \min_{(w,v) \in E}\{L_{(i-1),w} + l_{w,v}\} \\ \end{matrix}\right.$$
 			- $$L_{i,v}=\min\begin{matrix}L_{(i-1),v} \\ \min_{(w,v) \in E}\{L_{(i-1),w} + l_{w,v}\} \\  \end{matrix}$$
 			- meanwhile, keep track of Predecessor pointers $B[i, v]$ = 2nd-last vertex in the shortest path. this will track shortest paths. note that $B[0, v] = null$.
 			- with no negative cycles:  if $L_{i, v}=L_{i-1, v}$ ($v$ is target vertex). This means optimal path is already found for path $s-v$. Can exit early. 

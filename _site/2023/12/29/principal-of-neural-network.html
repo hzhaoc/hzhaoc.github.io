@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>
+        
+            principal of neural network
+        
+    </title>
+
+    
+        <link rel='stylesheet' href='http://localhost:4000/assets/css/syntax.css' type='text/css'>
+    
+    
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+</head>
+
+<body>
+    <!-- <header>
+    <h1><a href='http://localhost:4000/'></a></h1>
+</header> -->
+<!-- <a href='http://localhost:4000/'> Home</a> | <a href='http://localhost:4000/about/'>About </a> | <a href='http://localhost:4000/contact/'> Contacts</a> | <a href='http://localhost:4000/archive/'> Archive</a>  -->
+<a href='http://localhost:4000/'> Home</a> | <a href='http://localhost:4000/archive/'> Archive</a> | <a href='http://localhost:4000/about/'>About </a>
+<hr>
+
+
+    <h1>principal of neural network</h1>
+<div class='separator'></div>
+        
+<h1 id="inspiration">Inspiration</h1>
+<p>From human brains of neural nets:
+![[brain_neurons.png]]</p>
+
+<h1 id="structure">Structure</h1>
+<p>A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it’s an activation function, for example, one popular activation function is [[Logistic Regression]]; each activation neuron in one layer is an output from from each activation function with last layer’s activation neurons.
+![[neural_network.png]]</p>
+
+<h1 id="forward-propagation">Forward Propagation</h1>
+<p>In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.</p>
+
+<p>Formally, the forward propagation does the following:
+$a_1^{(2)}=g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3)$
+$a_2^{(2)}=g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3)$
+$a_3^{(2)}=g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3)$
+$h_\Theta(x)=g(\Theta_{10}^{(2)}a_0^{2} + \Theta_{11}^{(2)}a_1^{2} + \Theta_{12}^{(2)}a_2^{2} + \Theta_{13}^{(2)}a_3^{2})$
+where</p>
+<ul>
+  <li>$a_{i}^{(j)}$ is $j_{th}$ layer $i_{th}$ activation neuron;</li>
+  <li>$\Theta_{ij}^{(k)}$ is $k_{th}$ layer $i_{th}$ neuron $j_{th}$ coefficient, in the illustration example, $\Theta_{0j}^{(k)}$ is bias / intercept term and $x_0=0$;</li>
+  <li>$h_\Theta(x)$ is the final output, here it’s binary 0  or 1.</li>
+</ul>
+
+<h2 id="fp-intuition">FP Intuition</h2>
+<p>![[nn_fp.png]]</p>
+
+<h1 id="cost-function">Cost Function</h1>
+<p>We know each activation function in the network is a single [[Logistic Regression]] who input from last layer neurons, and output to next layer neurons.</p>
+
+<p><strong>One form</strong> of cost function, for a multiclass neural network, total cost including L2 [[Norm]] is:
+<script type="math/tex">J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[y_k^{(i)}log(h_\Theta(x^{(i)}))_k + (1-y_k^{(i)})log(1-log(h_\Theta(x^{(i)}))_k)] + \frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{ji}^{(l)})^2</script>
+where</p>
+<ul>
+  <li>$K$ is number of classes in output layer (including input and output)</li>
+  <li>$h_\Theta(x^{(i)}))_k$ is the <strong>whole</strong> binary-output function on the $k$-th output class, for the $i$-th training example. (<strong>Not just logistic regression to output to last layer</strong>)</li>
+</ul>
+
+<p><strong>Another form</strong> of cost function without regularization, is as below:
+<script type="math/tex">J(\theta)=\frac{1}{2m}\sum_{i}^{m}\sum_{k}^{K}(h_\Theta(x^{(i)})_k-y^{(i)}_k)^2</script>
+Same notations.</p>
+
+<h1 id="backward-propagation">Backward Propagation</h1>
+<h2 id="notation">Notation</h2>
+<p>![[neural_network2.png]]
+Given above NN structure, denote, refer to [[Logistic Regression]]:</p>
+<ul>
+  <li>$a^{(1)}=x$</li>
+  <li>$z^{(2)}=\Theta^{(1)}a^{(1)}$</li>
+  <li>$a^{(2)}=g(z(^{(2)}))$</li>
+  <li>$z^{(3)}=\Theta^{(2)}a^{(2)}$</li>
+  <li>$a^{(3)}=g(z(^{(3)}))$</li>
+  <li>$z^{(4)}=\Theta^{(3)}a^{(3)}$</li>
+  <li>$a^{(4)}=g(z(^{(4)}))=h_\Theta(x)$</li>
+</ul>
+
+<h2 id="gradient-computation">Gradient Computation</h2>
+<h3 id="error-term">‘Error’ term</h3>
+<p>Intuition: $\delta_j^{(l)}$ is the ‘error’ of node $j$ in layer $l$.</p>
+
+<p>For each output unit ($.*$ is element wise vector multiplication, here are all vector form):</p>
+<ul>
+  <li>$\delta^{(4)}=a^{(4)}-y$</li>
+  <li>$\delta^{(3)}=(\Theta^{(3)})^T\delta^{(4)}.<em>g’(z^{(3)})$ where $g’(z^{(3)})=a^{(3)}.</em>(1-a^{(3)})$ for logistic regression</li>
+  <li>$\delta^{(2)}=(\Theta^{(2)})^T\delta^{(3)}.*g’(z^{(2)})$</li>
+  <li>No $\delta^{(1)}$</li>
+</ul>
+
+<h3 id="gradient-derivation-">Gradient Derivation <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></h3>
+<ol>
+  <li>
+    <script type="math/tex; mode=display">\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=a_j^{(l)}\delta_i^{(l+1)}</script>
+  </li>
+</ol>
+
+<p>derivation (ignore regularization):
+$\frac{\partial{L}}{\partial{\Theta_{ij}^{(l)}}}=\frac{\partial{L}}{\partial{z_{i}^{(l)}}}\frac{\partial{z_{i}^{(l)}}}{\partial{\Theta_{ij}^{(l)}}}=\delta_i^{(l)}a_j^{(l-1)}$</p>
+
+<ol>
+  <li>
+    <script type="math/tex; mode=display">\delta_{j}^{(l)}=\frac{\partial}{\partial{z_{j}^{(l)}}}cost(i)=[(\delta^{(l+1)})^T\Theta_j^{(l)}]g'(z_j^l)</script>
+  </li>
+</ol>
+
+<p>derivation:
+$\delta_i^{(l)}=\frac{\partial{J}}{\partial{z_i^{(l)}}}$
+$=\sum_k\frac{\partial{J}}{\partial{z_k^{(l+1)}}}\frac{\partial{z_k^{(l+1)}}}{\partial{z_i^{(l)}}}$
+$=\sum_k\delta_k^{(l+1)}\Theta_{kj}^{(l)}g’(z_j^l)$
+$=[(\delta^{(l+1)})^T\Theta_j^{(l)}]g’(z_j^l)$ where $\delta$, $\Theta_j$ here denotes horizontal vector, vertical vector.</p>
+
+<p><strong>Be careful with the sum here because of the sum of error forms in Cost Function</strong></p>
+
+<p>Thus vectorwise we have:
+$\delta^{(l)}=(\Theta^{(l)})^T\delta^{(l+1)}.*g’(z^{(l)})$
+where $z$ is activation function for each neuron / unit</p>
+
+<h3 id="backward-propagation-computation-process">Backward propagation computation process</h3>
+<p>Set $\Delta_{ij}^{(l)}=0$ as error vectors for all layers
+For $i=1$ to $m$:</p>
+<ul>
+  <li>Set $a^{(1)}=x^{i}$</li>
+  <li>Perform forward propagation to compute $a^{(l)}$ for all layers all neurons</li>
+  <li>Perform backward propagation to compute $\partial$ for all layers all neurons</li>
+  <li>$\Delta_{ij}^{(l)}:=\Delta_{ij}^{(l)} + a_j^{(l)}\delta_i^{(l+1)}$</li>
+</ul>
+
+<p>Finally:</p>
+<ul>
+  <li>$D_{ij}^{(l)}:=\frac{1}{m}\Delta_{ij}^{(l)} + \lambda\Theta_{ij}^{(l)}$ if $j\neq0$ (contains regularization term)</li>
+  <li>$D_{ij}^{(l)}:=\frac{1}{m}\Delta_{ij}^{(l)}$  if  $j = 0$ (bias term)</li>
+  <li>$\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=D_{ij}^{(l)}$ &lt;- now you have the gradient</li>
+</ul>
+
+<h2 id="intuition">Intuition</h2>
+<p>![[nn_bp.png]]
+Similar intuition from FP, $\delta_{j}^{(l)}$ is the ‘error’ of cost for $a_{j}^{(l)}$; it’s weighted sum from this layer’s corresponding $\theta s$ and latter layer’s ‘errors’ multiplied by first derivative of activation function. The gradient for each $\theta$ is the product of latter layer’s corresponding error, and this layer’s corresponding activation unit value.</p>
+
+<h2 id="random-initialization">Random Initialization</h2>
+<p>Because if $\Theta=0$, gradient update will also be the same. So $\Theta$ needs to initialize $\Theta$ with random small values.</p>
+
+<h1 id="implementation">Implementation</h1>
+<ul>
+  <li><a href="https://github.com/ast0414/CSE6250BDH-LAB-DL/blob/master/1_FeedforwardNet.ipynb">Pytorch NN example</a></li>
+  <li>Loss Function: <code class="highlighter-rouge">torch.nn.CrossEntropyLoss</code>  works for multiclass classification problem; <code class="highlighter-rouge">torch.nn.BCELoss</code> may work for multilabel classification or <code class="highlighter-rouge">BCEWITHLOGITSLOSS</code> + <code class="highlighter-rouge">nn.sigmoid</code> on output layer, if <code class="highlighter-rouge">input</code> and <code class="highlighter-rouge">target</code> doesn’t match in shape in <code class="highlighter-rouge">criterion</code> in torch implementation, may try one-hot encoding. Some references for one-hot encoding impl: <a href="https://discuss.pytorch.org/t/what-kind-of-loss-is-better-to-use-in-multilabel-classification/32203/2">pytorch forum</a>, <a href="https://jamesmccaffrey.wordpress.com/2020/09/18/pytorch-multi-class-classification-using-the-mseloss-function/">a blog</a>, <a href="https://discuss.pytorch.org/t/what-kind-of-loss-is-better-to-use-in-multilabel-classification/32203">pytorch forum</a></li>
+</ul>
+
+<h1 id="other-activation-functions">Other activation functions</h1>
+<p>![[nn_activate_func.png]]</p>
+
+<h1 id="summary">Summary</h1>
+<p>The key idea of gradient descent to optimize $\Theta$ in neural network for $m$ training samples, is to <strong>understand error term and gradient in backward propagation</strong></p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="http://neuralnetworksanddeeplearning.com/">Michael Nielsen, <em>Neural Networks and Deep Learning, 2.4, 2.5</em></a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+
+
+
+<hr>
+    <!-- <p><small> <i>Build with <a href="https://jekyllrb.com/">Jekyll</a> and  <a href="https://github.com/cyevgeniy/jekyll-true-minimal/">true minimal theme</a></i> </small></p> -->
+</body>
+</html>

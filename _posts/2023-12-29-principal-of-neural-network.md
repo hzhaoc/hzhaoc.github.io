@@ -78,9 +78,13 @@ In the above example, each layer of activation neurons (input can be viewed as t
 
 Formally, the forward propagation does the following:
 $$a_1^{(2)}=g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3)$$
+\
 $$a_2^{(2)}=g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3)$$
+\
 $$a_3^{(2)}=g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3)$$
+\
 $$h_\Theta(x)=g(\Theta_{10}^{(2)}a_0^{2} + \Theta_{11}^{(2)}a_1^{2} + \Theta_{12}^{(2)}a_2^{2} + \Theta_{13}^{(2)}a_3^{2})$$
+\
 where
 - $a_{i}^{(j)}$ is $j_{th}$ layer $i_{th}$ activation neuron;
 - $\Theta_{ij}^{(k)}$ is $k_{th}$ layer $i_{th}$ neuron $j_{th}$ coefficient, in the illustration example, $\Theta_{0j}^{(k)}$ is bias / intercept term and $x_0=0$;

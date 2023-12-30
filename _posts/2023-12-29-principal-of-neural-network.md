@@ -6,11 +6,11 @@ date:   2023-12-29 22:00:00 -0800
 
 # Inspiration
 From human brains of neural nets\
-![brain_neurons](/assets/images/brain_neurons.png =400x200)
+![brain_neurons](/assets/images/brain_neurons.png)
 
 # Structure
 A basic structure of neural network is 1 input layer, certain number of hidden layers, and 1 output layer. For each arrow in the below illustration example, it's an activation function, for example, one popular activation function is *Logistic Regression*; each activation neuron in one layer is an output from from each activation function with last layer's activation neurons.\
-![simple_nn](/assets/images/neural_network.png =300x150)
+![simple_nn](/assets/images/neural_network.png)
 
 # Forward Propagation
 In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
@@ -40,7 +40,7 @@ Same notations.
 
 # Backward Propagation
 ## Notation
-![neural_network2.png](/assets/images/neural_network2.png =400x200)
+![neural_network2.png](/assets/images/neural_network2.png)
 
 Given above 4-layered NN structure, following previous notation customs, we make following notations:
 - $a^{(1)}=x$
@@ -97,7 +97,7 @@ Finally:
 - $\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=D_{ij}^{(l)}$ <- now you have the gradient
 
 ## BP Intuition
-![nn_bp](/assets/images/nn_bp.png =400x200)
+![nn_bp](/assets/images/nn_bp.png)
 
 Similar intuition from FP, $\delta_{j}^{(l)}$ is the 'error' of cost for $a_{j}^{(l)}$; it's weighted sum from this layer's corresponding $\theta s$ and latter layer's 'errors' multiplied by first derivative of activation function. The gradient for each $\theta$ is the product of latter layer's corresponding error, and this layer's corresponding activation unit value.
 

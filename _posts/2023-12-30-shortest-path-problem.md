@@ -5,28 +5,28 @@ date:   2023-12-30 02:00:00 -0800
 brief: 'computer algorithms from graph theory'
 ---
 
-find shortest path and distance in a directed/undirected graph {vertex, edge}
+Find shortest path and distance in a directed/undirected graph {vertex, edge}
 
-# Dijkstra’s Algorithm
-compute shortest distance between a starting vertex and all other vertexes in a graph. You can also track shortest path simultaneously, not shown in the code below.
+## Dijkstra’s Algorithm
+Compute shortest distance between a starting vertex and all other vertexes in a graph. You can also track shortest path simultaneously.
 
-idea is
-- starting from target vertex, explore neighbor vertexes by order of cumulative distance (ascending)
+The idea is:
+- start from target vertex, explore neighbor vertexes by order of cumulative distance (ascending)
 - if vertex to be explored is already explored, ignore;
 - if vertex to be explored is new, update cumulative distance.
 
-how does this make sure distance to each vertex is minimum?  key is exploration order is by distance. (this is implemented by heap) 
+How does this make sure distance to each vertex is minimum? The key is to explore vertices in order of distance. (this is implemented by heap) 
 
 Time Complexity: $O(mlogn)$, m = # of edges, n = # of vertexes
 
-pros:
+Pros:
 1. can deal with directed graph, undirected graph, non-negatives paths
 
-cons:
+Cons:
 1. can't be applied to negative edge lengths (can be improved?. See below code implementation)
 2. not very distributed (relevant to Internet routing)
 
-##### Code Implementation
+#### Code Implementation
 ```python
 class Graph:
 	def __init__(self, adjacencyList=None):
@@ -64,22 +64,22 @@ class Graph:
 		return dists
 ```
 
-# Bellman Ford Algorithm
-Either compute a shortest cycle-free path $s-v$ or output a negative cycle, for all paths starting from $s$. This is a [[Dynamic Programming]] solution.
+## Bellman Ford Algorithm
+Either compute a shortest cycle-free path $s-v$ or output a negative cycle, for all paths starting from $s$. This is a Dynamic Programming solution.
 
-##### identify optimal sub-structures & base cases
-Since subpath of a shortest path is in itself a shortest path, for a shortest path s-v, it can be broken down into shortest of all shortest paths w-v (w is any adjacent vertex of v's) plus its last edge cost C(w,v). Is this enough? When the structure is broken down into sub-structures, we notice number of edges in the subpath decrease by 1. And this information needs to be reflected in the program. Therefore, we assign a budget (number of edges needed at maximum) for any structure of shortest path s-v. Easily known, this budget is no bigger than vertex # -  1. And we have our base cases $A[x, s] = 0$, which means shortest distance s-s with any number of edges is 0. Remaining elements in $A$ will be initialized to $+\infty$. Also notice with budget introduced, there's also a case when $A[v,  i] = A[v,i-1]$ when $i$ number of edges is enough for optimal path $s-v$ 
+#### Identify optimal sub-structures & base cases
+Since subpath of a shortest path is by itself a shortest path, for a shortest path s-v, it can be broken into shortest of all shortest paths w-v (w is any adjacent vertex of v's) plus its last edge cost C(w,v). Is this enough? When the structure is broken into sub-structures, we notice number of edges in the subpath decrease by 1. And this information needs to be reflected in the program. Therefore, we assign a budget (number of edges needed at maximum) for any structure of shortest path s-v. Easily known, this budget is no bigger than vertex # -  1. And we have our base case $A[x, s] = 0$, which means shortest distance s-s with any number of edges is 0. Remaining elements in $A$ will be initialized to $+\infty$. Also notice with budget introduced, there's also a case when $A[v,  i] = A[v,i-1]$ when $i$ number of edges is enough for optimal path $s-v$ 
 
-##### pseudo code & analysis
+#### Pseudo code & analysis
 - Let $L_{i,v}$ = minimum length of a $s-v$ path with edge number $n\leq{i}$. $l_{i, j}$ = edge length of $e(i, j)$. Cycles allowed. And $+ \infty$ if no such path exists
 	- For $i = 1, 2, ..., n-1$: ($n$ if one (**only one!**) negative cycle existence needs to be checked) 
 		- For $v = 1, 2, ..., n$:
-			- $$L_{i,v}=\min\left\{ \begin{matrix} L_{\left( i - 1 \right),\ v} \\ \min_{(w,v) \in E}\left\{ L_{\left( i - 1 \right),w} + l_{w,v} \right\} \\  \end{matrix} \right.\ $$
+			- $L_{i,v}=\min\left\{ \begin{matrix} L_{\left( i - 1 \right),\ v} \\ \min_{(w,v) \in E}\left\{ L_{\left( i - 1 \right),w} + l_{w,v} \right\} \\  \end{matrix} \right.\ $
 			- meanwhile, keep track of Predecessor pointers $B[i, v]$ = 2nd-last vertex in the shortest path. this will track shortest paths. note that $B[0, v] = null$.
 			- with no negative cycles:  if $L_{i, v}=L_{i-1, v}$ ($v$ is target vertex). This means optimal path is already found for path $s-v$. Can exit early. 
 			- *if only need to check negative cycle: check last iteration (n) and see if there's improvement in distance; if also need to find the negative cycle path: use DFS to check for a cycle of predecessor pointers at every iteration*.
 
-> Why only one more iteration is sufficient to **one** capture negative cycles in shortest path? 
+> Why only one more iteration is sufficient to capture **one** negative cycle in shortest path? 
 > - If there's **1** negative-cycle in shortest s-v, one of the vertex in the path Must be visited Twice, number of edges for the budget will increase by one. n-1 => n.
 > - Extension: I think **K** additional iterations on top of original 0 -> n-1 will be able to capture K negative cycles in the shortest path s-v, since one negative cycle makes one vertex visited one more time, increasing edge number budget by 1.
 
@@ -103,7 +103,7 @@ Since subpath of a shortest path is in itself a shortest path, for a shortest pa
 	- Handling failures -- when an edge is broken
 		- change: each $v$ maintains shortest path distance to destination $t$, plus the ENTIRE PATH. Cons: more space required.
 
-##### code
+#### code
 ```python
 def BellmanFord(G, n):
 	"""
@@ -138,10 +138,10 @@ def BellmanFord(G, n):
 ```
 
 
-# Floyd-Warshall Algorithm
-compute all pairs of shortest paths (APSP) and report relevant negative cycles if any. This is a [[Dynamic Programming]] solution.
+## Floyd-Warshall Algorithm
+Compute all pairs of shortest paths (APSP) and report relevant negative cycles if any. This is a [[Dynamic Programming]] solution.
 
-##### identify optimal sub-structures
+#### Identify optimal sub-structures
 we know a subpath of a shortest path is in itself a shortest path. This time we don't break down an optimal path into a sub-optimal path and last edge, but two shortest paths (with a shared intermediary internal vertex of course). Notice also during this breakdown, for internal vertices of a path, the shared vertex is out. If we pre-index the vertexes 1, 2, ..., n, then during the optimal sub-structure breakdown, we can search for $f(K)$ which denotes vertexes 1 to K used for an optimal structure. If vertex $K$ is an internal vertex for the optimal path A[s, v, K] (denoting optimal distance between s and v,  with 1,2,...,K vertex as internal vertices), then its two optimal sub-paths will be exactly $A[s,k,k-1]$ and  $A[k,v,k-1]$. 
 
 Base cases & initialization: 
@@ -151,7 +151,7 @@ Base cases & initialization:
 
 Also notice with budget introduced, there's also a case when $A[s,v,k]=A[s,v,k-1]$ when $1,2,...k-1$ internal vertexes are enough for optimal path $s-v$ 
 
-##### pseudo code & analysis
+#### pseudo code & analysis
 ```C
 preindex vertices as 1,2,...,n
 let A[s,v,K] denote shortest distance s-v, with internal vertices 1,2,...K. 
@@ -170,7 +170,7 @@ for k=1 to n:
 	-   $O(n^3)$ (n: vertex #;  m: edge #;)
 - important special case: transitive closure of a binary relation (basically means you only need to check if two vertexes s-v has a path.). specifically,  change one line to 
 ```C
-			A[i,j,k] = max{A[i,j,k-1], A[i,k,k-1] * A[k,j,k-1]}
+	A[i,j,k] = max{A[i,j,k-1], A[i,k,k-1] * A[k,j,k-1]}
 ```
 
 ##### code
@@ -200,16 +200,18 @@ def FloydWarshall(G, n):
 ```
 
 
-# Johnson's Algorithm
-compute all pairs of shortest paths (APSP). This is a [[Dynamic Programming]] solution.
-##### motivation
+## Johnson's Algorithm
+Compute all pairs of shortest paths (APSP). This is a [[Dynamic Programming]] solution.
+
+#### Motivation
 running time wise, n\*Dijkstra is better than n\*Bellman Ford, but Dijkstra can not deal with negative edges. And only in dense graph ($n=O(m^2)$), Floyd-Warshall is better than n\*Dijkstra. So how to apply fast Dijkstra with negative edges in graph?
 -   Time complexity: (n: vertex #;  m: edge #;)
 	- $O(n^2m)$ for n\*Bellman Ford
 	- $O(nmlogn)$ for n\*Dijkstra
 	- $O(n^3)$ for Floyd-Warshall
-##### core idea
-reweight edge costs **in a way** that makes:
+	
+#### Core idea
+Reweight edge costs **in a way** that makes:
 - there's no negative edges, so we can use Dijkstra which is fast in sparse graph
 - new shortest path is the same path as before, so reweighting does no change the answers
 
@@ -229,7 +231,7 @@ why new edges are guaranteed to be non-negative?
 		- thus we proved, for any edge in graph $G$, new edge cost will be non-negative.
 
 
-##### pseudo code & analysis
+#### Pseudo code & analysis
 1. add new vertex $s$, outgoing arc to each original vertex with distance **0**. 
 2. run 1 Bellman Ford on $s$. 
 3. assign weights to each vertex $v$ = shortest distance $D(s,v)$. edit new edge cost = old edge cost + tail weight - head weight
@@ -238,7 +240,7 @@ why new edges are guaranteed to be non-negative?
 - dominate run time is at step 4. $O(nmlogn)$
 - compare it to other algorithms, it is fast at $O(nmlogn)$, and deal with negative edges.
 
-##### code
+#### code
 ```python
 def Johnson(G, n):
 	"""
@@ -290,8 +292,7 @@ def Johnson(G, n):
 	return 1, global_d_min
 ```
 
-
-# Summary
+## Summary
 - Bellman Ford: $O(n^2m)$
 - Dijkstra: $O(nmlogn)$ (**X** deal with negative edges)
 - Floyd Warshall: $O(n^3)$

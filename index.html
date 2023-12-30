@@ -11,11 +11,9 @@ layout: default
     a:active  {color:#000;text-decoration:none}  /* selected link   */ 
   </style>
   <h2>
-    <div id="class">
       <a href='{{ site.url }}{{ post.url }}' title='{{ post.title }}'>
         {{ post.title }}
       </a>
-    </div>
   </h2>
   
   <p>{{ post.brief | strip_html | truncate: 100 }}</p>

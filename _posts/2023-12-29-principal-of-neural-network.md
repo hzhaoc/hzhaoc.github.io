@@ -26,14 +26,23 @@ $$J(\theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\theta(X^{(i)}), y^{(i)})$$
 $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}[y^{(i)} * log(h_\theta(X^{(i)})) + (1-y^{(i)}) * log(1-h_\theta(X^{(i)}))]$$
 #### Proof with MLE (maximum likelihood estimation)
 According to likelihood:
+\
 $$L(\theta)=\prod_{i=1}^{m}P(y^{(i)}|X^{(i)})$$
-obviously (see [[Bernoulli Distribution]])
+\
+obviously (Bernoulli Distribution)
+\
 $$L(\theta)=\prod_{i=1}^{m}[h_{\theta}(X^{(i)})^{y^{(i)}}(1-h_{\theta}(X^{(i)}))^{1-y^{(i)}}]$$
-log both sides:
+\
+log both sides:\
 $$l(\theta)=\sum_{i=1}^{m}[y^{(i)}*log(h_{\theta}(X^{(i)})) + (1-y^{(i)})*log(1-h_{\theta}(X^{(i)}))]$$
-total cost is to maximize $$l(\theta)$$
-or to minimize $$J(\theta)=-\frac{1}{m}l(\theta)$$
-done
+\
+total cost is to maximize
+\
+$$l(\theta)$$
+\
+or to minimize \
+$$J(\theta)=-\frac{1}{m}l(\theta)$$
+\
 
 ### Gradient Descent
 if negative log-likelihood is: (just a different form from above $J(\theta)$)

@@ -34,11 +34,12 @@ According to likelihood:
 obviously (Bernoulli Distribution)
 - $$L(\theta)=\prod_{i=1}^{m}[h_{\theta}(X^{(i)})^{y^{(i)}}(1-h_{\theta}(X^{(i)}))^{1-y^{(i)}}]$$
 
-log both sides:\
+log both sides:
 - $$l(\theta)=\sum_{i=1}^{m}[y^{(i)}*log(h_{\theta}(X^{(i)})) + (1-y^{(i)})*log(1-h_{\theta}(X^{(i)}))]$$
 
 total cost is to maximize 
 - $$l(\theta)$$ 
+\
 or to minimize
 - $$J(\theta)=-\frac{1}{m}l(\theta)$$
 
@@ -56,6 +57,7 @@ where
 - $\eta$ is the learning rate
 
 then $\forall\mathbf{w}_j \in [1, 2, ..., m]$:\
+\
 $$\frac{\partial NLL(D, W)}{\partial{W}_j}= -\frac{\partial\sum_{i=1}^{n}[(1-y_i)log(1-\sigma(W^TX_i)) + y_ilog\sigma(W^TX_i)]}{\partial{W}_j}$$
 \
 $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= -\sum_{i=1}^{n}[(y_i)\frac{1}{\sigma(\mathbf{W}^TX_i)}\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}} - (1-y_i)\frac{1}{1-\sigma(\mathbf{W}^TX_i)}\frac{\partial\sigma(\mathbf{W}^TX_i)}{\partial\mathbf{W_j}}]$$
@@ -72,27 +74,25 @@ $$\frac{\partial NLL(D, \mathbf{W})}{\partial\mathbf{W}_j}= \sum_{i=1}^{n}[\sigm
 \
 where 
 \
-$X_i^j$ denotes $j$th feature of the $i$th patient training vector, $\mathbf{W}$ is coefficient vector.
+- $X_i^j$ denotes $j$th feature of the $i$th patient training vector.
+- $\mathbf{W}$ is coefficient vector.
 
 #### Stochastic Gradient Descent (SGD)
 update $\mathbf{w_t}$ based on a single pair of $X, y$ , SGD is:
-$$\mathbf{w_{t}} = \mathbf{w_{t-1}} - \eta(\sigma(\mathbf{w}^T\mathbf{x}_t) - y_t)\mathbf{x}_t$$
+- $$\mathbf{w_{t}} = \mathbf{w_{t-1}} - \eta(\sigma(\mathbf{w}^T\mathbf{x}_t) - y_t)\mathbf{x}_t$$
 
 with L2 Norm regularization ($J= NLL + \mu\Vert{\mathbf{W}}\Vert_2^2$), SGD is:
-$$\mathbf{w_{t}} = (1-2\eta\mu)\mathbf{w_{t-1}} - \eta(\sigma(\mathbf{w}^T\mathbf{x}_t) - y_t)\mathbf{x}_t$$
+- $$\mathbf{w_{t}} = (1-2\eta\mu)\mathbf{w_{t-1}} - \eta(\sigma(\mathbf{w}^T\mathbf{x}_t) - y_t)\mathbf{x}_t$$
 
 
 # Neural Network Forward Propagation
 In the above example, each layer of activation neurons (input can be viewed as the $0_{th}$ layer of activation neuron) is an input to each logistic regression to output next layer of neurons, until the final output of binary or multiclass.
 
 Formally, the forward propagation does the following:
-$$a_1^{(2)}=g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3)$$
-\
-$$a_2^{(2)}=g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3)$$
-\
-$$a_3^{(2)}=g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3)$$
-\
-$$h_\Theta(x)=g(\Theta_{10}^{(2)}a_0^{2} + \Theta_{11}^{(2)}a_1^{2} + \Theta_{12}^{(2)}a_2^{2} + \Theta_{13}^{(2)}a_3^{2})$$
+- $a_1^{(2)}=g(\Theta_{10}^{(1)}x_0 + \Theta_{11}^{(1)}x_1 + \Theta_{12}^{(1)}x_2 + \Theta_{13}^{(1)}x_3)$
+- $a_2^{(2)}=g(\Theta_{20}^{(1)}x_0 + \Theta_{21}^{(1)}x_1 + \Theta_{22}^{(1)}x_2 + \Theta_{23}^{(1)}x_3)$
+- $a_3^{(2)}=g(\Theta_{30}^{(1)}x_0 + \Theta_{31}^{(1)}x_1 + \Theta_{32}^{(1)}x_2 + \Theta_{33}^{(1)}x_3)$
+- $h_\Theta(x)=g(\Theta_{10}^{(2)}a_0^{2} + \Theta_{11}^{(2)}a_1^{2} + \Theta_{12}^{(2)}a_2^{2} + \Theta_{13}^{(2)}a_3^{2})$
 \
 where
 - $a_{i}^{(j)}$ is $j_{th}$ layer $i_{th}$ activation neuron;
@@ -103,13 +103,15 @@ where
 We know each activation function in the network is a single Logistic Regression who input from last layer neurons, and output to next layer neurons. 
 
 **One form** of cost function, for a multiclass neural network, total cost including L2 Norm is:
-$$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[y_k^{(i)}log(h_\Theta(x^{(i)}))_k + (1-y_k^{(i)})log(1-log(h_\Theta(x^{(i)}))_k)] + \frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{ji}^{(l)})^2$$
+- $$J(\theta)=-\frac{1}{m}\sum_{i=1}^{m}\sum_{k=1}^{K}[y_k^{(i)}log(h_\Theta(x^{(i)}))_k + (1-y_k^{(i)})log(1-log(h_\Theta(x^{(i)}))_k)] + \frac{\lambda}{2m}\sum_{l=1}^{L-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_{l+1}}(\Theta_{ji}^{(l)})^2$$
+\
 where
 - $K$ is number of classes in output layer (including input and output)
 - $h_\Theta(x^{(i)})_k$ is the **whole** binary-output function on the $k$-th output class, for the $i$-th training example. (**Not just logistic regression to output to last layer**)
 
 **Another form** of cost function without regularization, is as below:
-$$J(\theta)=\frac{1}{2m}\sum_{i}^{m}\sum_{k}^{K}(h_\Theta(x^{(i)})_k-y^{(i)}_k)^2$$
+- $$J(\theta)=\frac{1}{2m}\sum_{i}^{m}\sum_{k}^{K}(h_\Theta(x^{(i)})_k-y^{(i)}_k)^2$$
+\
 Same notations.
 
 # Backward Propagation
@@ -141,15 +143,15 @@ For each output unit ($.*$ is element wise vector multiplication, here are all v
 1. $$\frac{\partial}{\partial\Theta_{ij}^{(l)}}J(\Theta)=a_j^{(l)}\delta_i^{(l+1)}$$ 
 
 derivation (ignore regularization):
-$\frac{\partial{L}}{\partial{\Theta_{ij}^{(l)}}}=\frac{\partial{L}}{\partial{z_{i}^{(l)}}}\frac{\partial{z_{i}^{(l)}}}{\partial{\Theta_{ij}^{(l)}}}=\delta_i^{(l)}a_j^{(l-1)}$
+- $\frac{\partial{L}}{\partial{\Theta_{ij}^{(l)}}}=\frac{\partial{L}}{\partial{z_{i}^{(l)}}}\frac{\partial{z_{i}^{(l)}}}{\partial{\Theta_{ij}^{(l)}}}=\delta_i^{(l)}a_j^{(l-1)}$
 
 2. $$\delta_{j}^{(l)}=\frac{\partial}{\partial{z_{j}^{(l)}}}cost(i)=[(\delta^{(l+1)})^T\Theta_j^{(l)}]g'(z_j^l)$$
 
 derivation:
-$\delta_i^{(l)}=\frac{\partial{J}}{\partial{z_i^{(l)}}}$
-$=\sum_k\frac{\partial{J}}{\partial{z_k^{(l+1)}}}\frac{\partial{z_k^{(l+1)}}}{\partial{z_i^{(l)}}}$
-$=\sum_k\delta_k^{(l+1)}\Theta_{kj}^{(l)}g'(z_j^l)$
-$=[(\delta^{(l+1)})^T\Theta_j^{(l)}]g'(z_j^l)$ where $\delta$, $\Theta_j$ here denotes horizontal vector, vertical vector. 
+- $\delta_i^{(l)}=\frac{\partial{J}}{\partial{z_i^{(l)}}}$
+- $=\sum_k\frac{\partial{J}}{\partial{z_k^{(l+1)}}}\frac{\partial{z_k^{(l+1)}}}{\partial{z_i^{(l)}}}$
+- $=\sum_k\delta_k^{(l+1)}\Theta_{kj}^{(l)}g'(z_j^l)$
+- $=[(\delta^{(l+1)})^T\Theta_j^{(l)}]g'(z_j^l)$ where $\delta$, $\Theta_j$ here denotes horizontal vector, vertical vector. 
 
 **Be careful with the sum here because of the sum of error forms in Cost Function**
 

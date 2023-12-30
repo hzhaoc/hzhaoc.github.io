@@ -2,7 +2,7 @@
 layout: post
 title:  "principal of neural network"
 date:   2023-12-29 22:00:00 -0800
-brief: 'a mind as a neural net of binaries'
+brief: 'a physically-over-simplifed and engineering-complicated computer approximation of human mind'
 ---
 
 # Inspiration

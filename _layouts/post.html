@@ -3,8 +3,7 @@ layout: default
 ---
 <h1>{{ page.title }}{{ page.shortUrl }}</h1>
 <div class='separator'></div>
-        
-{{ content }}
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">{{ content }}</script>
         
 {% if site.disqus-id %} {% include comments.html %} {% endif %}
 

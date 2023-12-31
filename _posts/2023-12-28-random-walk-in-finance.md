@@ -2,10 +2,10 @@
 layout: post
 title:  "Random Walk in Finance"
 date:   2023-12-28 00:10:00 -0800
-brief: 'heroes are heroes because they are heroic in behavior, not because they won or lost.'
+brief: '"heroes are heroes because they are heroic in behavior, not because they won or lost."'
 ---
 
-When things go our way we reject the lact of certainty.
+"When things go our way we reject the lact of certainty."
 
 ```python
 class ItoMC:

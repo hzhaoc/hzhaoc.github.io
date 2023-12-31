@@ -651,7 +651,6 @@ $$h\left( y \right) < 0,\forall\ y \in (0,\ 0.5)$$
 Consider when 1 \> y \> 0.5,\
 $$h\left( y \right) = \ \left( 1 - y \right)^{\frac{y - 1}{y}}*y - 1,y \rightarrow 1$$
 $$h\left( y \right) = \ \left( 1 - y \right)^{\frac{y - 1}{y}} - 1,y \rightarrow 1$$
-$$h\left( y \right) = \frac{1}{{(1 - y)}^{1 - y}} - 1,\ y \rightarrow 1$$
 $$h\left( y \right) \rightarrow 0$$
 
 Therefore,\

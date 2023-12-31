@@ -617,9 +617,8 @@ $$k^{'}\left( y < \frac{1}{2} \right) > 0$$
 $$k^{'}\left( y > \ \frac{1}{2} \right) < 0$$
 
 Therefor:
-$$1.\ k\left( y \right)\(monotonically_increase_at)\left( 0,\ 0.5 \right), (monotonically_decrease_at) \left( 0.5,\ 1 \right)$$
-
-$$2.\ \max{k(y)},y \in \left( 0,\ 1 \right) = k\left( 0.5 \right) = \sim 0.3(approximate)$$
+- `k(y)` monotically increase at `(0, 0.5)` and monotically decrease at `(0.5, 1)`
+- $$\ \max{k(y)},y \in \left( 0,\ 1 \right) = k\left( 0.5 \right) = \sim 0.3(approximate)$$
 
 Note that there's a number between 0.5 and 1 that make the function equal to zero,\
 
@@ -639,8 +638,8 @@ $$h'\left( y \right) > 0,\ y \in (0,\ a)$$
 $$h'\left( y \right) < 0,y \in (a,1)$$
 
 Namely,\
-$$h\left( y \right)\(monotonically_increase_at)\left( 0,\ a \right), (monotinically_decrease_at) \left( a,\ 1 \right),\ $$
-$$where\ a\ is\ a\ constant\ and\ 1 > a > 0.5\ $$
+- `h(y)` monotically increase at `(0, a)` and monotically decrease at `(a, 1)`
+- $$where\ a\ is\ a\ constant\ and\ 1 > a > 0.5\ $$
 
 Obviously:\
 $$h\left( 0.5 \right) = 0$$
@@ -666,7 +665,7 @@ Namely,\
 $$f'\left( y \right) < 0\ \forall\ y \in \left( 0,\ 0.5 \right),\ f'\left( y \right) = 0\ for\ y = 0.5,\ f'\left( y \right) > 0\ \forall\ y \in (0.5,\ 1)$$
 
 Namely,\
-$$f(y)\ monotically\ decrease\ at\ \left( 0,\ 0.5 \right),\ and\ monotically\ increase\ at\ (0.5,\ 1)$$
+- `f(y)` monotically decrease at `(0, 0.5)` and monotically increase at `(0.5, 1)`
 
 Therefore,\
 $$\min{f\left( y \right)} = f\left( 0.5 \right)$$
@@ -675,7 +674,7 @@ Therefore,\
 $$1 - \ e^{- \ \frac{x}{b}} = 0.5$$
 
 So,\
-$$x = ln2*b$$
-$$p\left( \text{false_positive_of_x} \right) \leq \ \left( \frac{1}{2} \right)^{(ln2)b},\ \forall\ x \notin S$$
+- $$x = ln2*b$$
+- $$p\left( \text{false_positive_of_x} \right) \leq \ \left( \frac{1}{2} \right)^{(ln2)b},\ \forall\ x \notin S$$
 
 In all, when number of hash functions $K = ln2 * b$ ($b$ is number of bits allocated per object key), ($ln2 = ~0.693$). Then, Bloom Filter's FPR for new insert $x$ is at its minimum (assume S is inserted already).

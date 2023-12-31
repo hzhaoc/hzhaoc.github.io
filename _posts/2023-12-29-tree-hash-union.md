@@ -593,8 +593,8 @@ $$g\left( x \right) = \frac{e^{- \ \frac{x}{b}}*\frac{1}{b}*x}{1 - e^{- \frac{x}
 Let:
 $$y = 1 - \ e^{- \ \frac{x}{b}},x \geq 1,b \geq 1$$
 
-So:
-$$g\left( y \right) = \ln{{\lbrack\left( 1 - y \right)}^{\frac{y - 1}{y}}*y}\rbrack,y\  \in (0,\ 1)$$
+<!-- So:
+$$g\left( y \right) = \ln{{\lbrack\left( 1 - y \right)}^{\frac{y - 1}{y}}*y}\rbrack,y\  \in (0,\ 1)$$ -->
 
 In order to know f(x) monotony, we only need to know g(y) range.\
 Namely to know range of:

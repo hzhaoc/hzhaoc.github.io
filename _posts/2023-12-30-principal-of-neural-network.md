@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Principal of Neural Network"
-date:   2023-12-30 22:00:00 -0800
+date:   2023-12-30 21:00:00 -0800
 brief: 'a computational approximation of human mind'
 ---
 

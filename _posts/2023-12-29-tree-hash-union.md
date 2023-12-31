@@ -581,7 +581,8 @@ $$f\left( x \right) = \left\lbrack 1 - \ e^{- \frac{x}{b}} \right\rbrack^{x},x \
 First derivative:\
 $$f^{'}\left( x \right) = e^{ln(1 - e^{- \ \frac{x}{b}})x}\lbrack\frac{e^{- \ \frac{x}{b}}*\frac{1}{b}*x}{1 - e^{- \frac{x}{b}}} + ln(1 - e^{- \ \frac{x}{b}})\rbrack$$
 
-x\>=1, b\>=1\
+x\>=1, b\>=1
+\
 
 Note the left part of the left formula\
 $$e^{ln(1 - e^{- \ \frac{x}{b}})x} > 0$$
@@ -615,9 +616,8 @@ $$k^{'}\left( \frac{1}{2} \right) = 0$$
 $$k^{'}\left( y < \frac{1}{2} \right) > 0$$
 $$k^{'}\left( y > \ \frac{1}{2} \right) < 0$$
 
-Therefor:\
-
-$$1.\ k\left( y \right)\text{\ monotonically\ increase\ at\ }\left( 0,\ 0.5 \right),\ monotonically\ decrease\ at\ \left( 0.5,\ 1 \right)$$
+Therefor:
+$$1.\ k\left( y \right)\(monotonically_increase_at)\left( 0,\ 0.5 \right), (monotonically_decrease_at) \left( 0.5,\ 1 \right)$$
 
 $$2.\ \max{k(y)},y \in \left( 0,\ 1 \right) = k\left( 0.5 \right) = \sim 0.3(approximate)$$
 
@@ -639,7 +639,7 @@ $$h'\left( y \right) > 0,\ y \in (0,\ a)$$
 $$h'\left( y \right) < 0,y \in (a,1)$$
 
 Namely,\
-$$h\left( y \right)\text{\ monotonically\ increase\ at\ }\left( 0,\ a \right),\ and\ monotinically\ decrease\ at\ \left( a,\ 1 \right),\ $$
+$$h\left( y \right)\(monotonically_increase_at)\left( 0,\ a \right), (monotinically_decrease_at) \left( a,\ 1 \right),\ $$
 $$where\ a\ is\ a\ constant\ and\ 1 > a > 0.5\ $$
 
 Obviously:\
@@ -676,6 +676,6 @@ $$1 - \ e^{- \ \frac{x}{b}} = 0.5$$
 
 So,\
 $$x = ln2*b$$
-$$p\left( \text{false\ positive\ of\ x} \right) \leq \ \left( \frac{1}{2} \right)^{(ln2)b},\ \forall\ x \notin S$$
+$$p\left( \text{false_positive_of_x} \right) \leq \ \left( \frac{1}{2} \right)^{(ln2)b},\ \forall\ x \notin S$$
 
 In all, when number of hash functions $K = ln2 * b$ ($b$ is number of bits allocated per object key), ($ln2 = ~0.693$). Then, Bloom Filter's FPR for new insert $x$ is at its minimum (assume S is inserted already).

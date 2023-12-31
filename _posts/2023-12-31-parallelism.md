@@ -627,3 +627,105 @@ most actual caches, probably except for TLB, are indeed tall.
 
 [^1]: Jee Whan Choi, et al, A roofline model of energy, 2012.05
 [^2]: Frigo et al, (FOCS, 1999)
+
+
+
+
+
+# Work Span Model
+Work-Span model is implemented by a DAG (directed acyclic graph) where each node as a work depends on one another. 
+
+Assume:
+1. All processors run at same speed
+2. 1 operation work = 1 unit of time
+3. no edge cost
+
+Denote:
+- total work: $W(n)$
+- depth of DAG: $D(n)$
+- number of processors: $p$
+- total execution time: $T_p{n}$
+
+### Analysis
+- $T_p{n}\geq\max \{D(n), \ \ \text{Ceil}(\frac{W(n)}{p})\}$
+	- Span Law: $T_p{n}\geq D(n)$
+	- Work Law: $T_p{n}\geq\text{Ceil}(\frac{W(n)}{p})$
+
+##### Brent's Theorem
+break execution in phases:
+- each phase has 1 vertex in critical path (longest path in DAG)
+- non-critical path vertex in each phase are independent
+- every vertex must appear in some phase
+
+extra denote:
+- execution time in $k$th phase: $t_k$
+- work in $k$th phase: $w_k$
+
+then:  
+$$t_k=\text{Ceil}(\frac{w_k}{p})=>T_p=\sum_{k=1}^D{\text{Ceil}(\frac{w_k}{p})}\leq\sum_{k=1}^D\text{Floor}(\frac{w_k-1}{p}+1)=\frac{W-D}{p}+D$$
+
+to sum up: $$\max \{D(n), \ \text{Ceil}(\frac{W(n)}{p})\}\leq T_p\leq{\frac{W-D}{p}+D}$$
+
+##### Speedup
+Consider speedup on our DAG parallel algorithm calculated as $$\frac{best\ sequential \ time}{parallel\ time}$$
+namely $$S_p(n)=\frac{T_*(n)}{T_p(n)}$$
+substitution by previous inequality: $$S_p(n)\leq \frac{p}{\frac{W}{W_*}+\frac{p-1}{W_*/D}}$$
+
+you can clearly see if speedup wants to scale linearly with $p$, this two equation must be met in the scaling inequality:
+- work optimality: $$W(n)=O(W_*(n))$$
+- weak scalability: $$p=O(\frac{W_*}{D})$$
+
+### basic concurrency primitives
+![basic concur primitives.png|600](/assets/images/basic%20concur%20primitives.png)
+-  spawn: child thread
+-  sync
+-  par-for (parallel loop, generate independent child for each iteration)
+	-  **if iteration operation is independent of each other, the total span will be $O(logn)$ by divide and conquer, not theoretical $O(1)$ since all iterations can not be spawned all at once.**  See below the assumed implementation for par-for in the course CSE 6220.
+	-  ![par-for implementation.png|550](/assets/images/par-for%20implementation.png)
+
+### desiderata for work-span
+- work optimality: $$W(n)=O(W_*(n))$$
+- "low" span (poly-logarithmic): $$D(n)=O(log^kn)$$
+
+motivation: $\frac{W}{D}=O(\frac{n}{log^kn})$ grows nearly linearly with $n$
+
+##### matrix-vector multiply
+- loop1 operation is independent
+- loop2 operation is also independent with a temp value
+![work-span matrix mult.png|600](/assets/images/work-span%20matrix%20mult.png)
+
+![par bfs.png|500](/assets/images/par%20bfs.png)
+
+Depth of BFS search should be "diameter" of graph, or the longest distance between two nodes (i.e. the number of waves from one node to spread over to another node)
+
+### Algorithm
+pseudo code
+-  l ← 0 ..... the code is level synchronous. This is the level counter set to 0
+-  The frontiers referenced are also level specific (Fl)
+-  l ← l + 1 .... increments the counter
+-  The span (defined by the while loop) will be no larger than the diameter of the graph
+-  Process level will: take the graph and the current frontier. It will produce a new frontier and update the distances (D)
+![par bfs pseudo  code.png|400](/assets/images/par%20bfs%20pseudo%20%20code.png)
+
+- using bag,putting all  together
+	- run time: O(d*V*E)
+![par split algo total.png|500](/assets/images/par%20split%20algo%20total.png)
+
+### Data structure: Bag
+bag property:
+- The data is an unordered collection
+- It will allow repetition
+- Allow redundant insertions of the same vertex, if necessary
+
+operations:
+- traversal
+- union, split
+
+##### Pennant
+Pennant is: a tree with 2k nodes and a unary root having a child. the child is the root of a complete binary tree. X is the root. Xs is the complete binary tree. So a pennant has **2^n** nodes. Essentially a binary number representation, a binary can be represented as a series of pennants. 
+
+For example, bag of 23 nodes = 2^4 size pennant, 2^2  size pennant, 2^1 size pennant, 2^0 size pennant ($23=10111_2$). Since it is essentially a binary number, 
+- it can easily do one element insertion or even two bag union like binary addition. (logn run time)
+- logn time for split as well
+	- essentially a binary right shift 
+	- ![bag split.png|400](/assets/images/bag%20split.png)

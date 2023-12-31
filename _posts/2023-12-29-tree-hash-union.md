@@ -582,7 +582,6 @@ First derivative:\
 $$f^{'}\left( x \right) = e^{ln(1 - e^{- \ \frac{x}{b}})x}\lbrack\frac{e^{- \ \frac{x}{b}}*\frac{1}{b}*x}{1 - e^{- \frac{x}{b}}} + ln(1 - e^{- \ \frac{x}{b}})\rbrack$$
 
 x\>=1, b\>=1
-\
 
 Note the left part of the left formula\
 $$e^{ln(1 - e^{- \ \frac{x}{b}})x} > 0$$
@@ -618,7 +617,7 @@ $$k^{'}\left( y > \ \frac{1}{2} \right) < 0$$
 
 Therefor:
 - `k(y)` monotically increase at `(0, 0.5)` and monotically decrease at `(0.5, 1)`
-- $$\ \max{k(y)},y \in \left( 0,\ 1 \right) = k\left( 0.5 \right) = \sim 0.3(approximate)$$
+- $\ \max{k(y)},y \in \left( 0,\ 1 \right) = k\left( 0.5 \right) = \sim 0.3(approximate)$
 
 Note that there's a number between 0.5 and 1 that make the function equal to zero,\
 

@@ -34,7 +34,7 @@ As illustrated, if a single (such as `sum`) operation takes `O(1)` time, then a 
 suppose
 - the opeartion is still mathematical sum
 - the goal is to update `A[3]`
-
+\
 
 we do the following:
 - update `3 = 0011` that is `B[3]`. use `k = k + k & -k` trick to add `rightmost 1 = 0001` to `0011` to get an exlusive subpath, `0100 = 4`.

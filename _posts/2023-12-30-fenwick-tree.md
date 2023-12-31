@@ -80,6 +80,51 @@ class Bit:
         return
 ```
 
+#### 2D Form
+To do range query and point update in a 2D array. For example, we want to do efficient element update and presum for a matrix `A`, where presum for `A[I][J]` is sum of all `A[i][j]` where `0 <= i <= I and 0 <= j <= J for all possible i, j`.
+\
+Now in the binary indexed tree, 
+- to do such prefix sum, we first need to find all subpaths of rows, then in each row we have to find subpaths of columns. Then for a matrix of length `nxm`, such a presum operation takes `logmlogn`. 
+- to do point update, we still reverse the action.
+
+##### code
+```python
+class Bit:
+    def __init__(self, n, m):
+        self.n = n
+        self.m = m
+        self.b = [[0] * (m+1) for i in range(n+1)]
+
+    def rangeQuery(self, i, j, ni, nj):
+        # ni, nj: position of bottom right of the rectangle
+        # i, j: position of the top left of the rectangle
+        # range sum of the rectangle covered by i,j,ni,nj
+        br = self.presum(ni, nj)
+        bl = self.presum(ni, j-1)
+        tr = self.presum(i-1, nj)
+        tl = self.presum(i-1,j-1)
+        return br - bl - tr + tl
+
+    def presum(self, i, j):
+        s = 0
+        while i > 0:
+            y = j
+            while y > 0:
+                s += self.b[i][y]
+                y -= y & -y
+            i -= i & -i
+        return s
+    
+    def pointUpdate(self, i, j, diff):
+        v = diff
+        while i <= self.n:
+            y = j
+            while y <= self.m:
+                self.b[i][y] += v
+                y += y & -y
+            i += i & -i
+```
+
 ## Point Query and Range Update
 To do this, the reverse of the previous type, given array `A[1,2,..,8]`, to update for range `l,l+1,...,r`, we can use the previous `pointUpdate` binary technique to update `l`, such that all mutually exclusive paths that can contain `l` will contain `l`. We then do reverse-update for `r+1`, such that all mutually exclusive paths after `r` cancels previous update for `l`. 
 

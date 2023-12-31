@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Shortest Path problem"
-date:   2023-12-30 02:00:00 -0800
+date:   2023-12-30 10:00:00 -0800
 brief: 'algorithms from graph theory'
 ---
 

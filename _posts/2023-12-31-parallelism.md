@@ -6,7 +6,7 @@ brief: 'when linear algebra meets distributed computing'
 ---
 
 # Start from matrix multiplication
-We know in a single thread, multiplication of two matrixes in naive implementation can be easily done in `O(n^3)` time where `n` is the side length. There are algorithms that can asymptotically approach the theoraticall trivial lower bound of `O(wn^2)` where `2 <= w < 2.37...`. One of such algorithm is strassen algorithm with a run time of $O(n^{\log_2^{7}})\approx{O(n^{2.8})}$
+We know in a single thread, multiplication of two matrixes in naive implementation can be easily done in `O(n^3)` time where `n` is the length of its sides. There are algorithms that can asymptotically approach the theoretical lower bound of `O(w*n^2)` where `2 <= w < 2.37...`. One of such algorithms is called *strassen*. Its run time is $O(n^{\log_2^{7}})\approx{O(n^{2.8})}$
 
 ## matrix multiplication in single thread
 ```python

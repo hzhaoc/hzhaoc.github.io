@@ -637,9 +637,9 @@ Namely,\
 $$h'\left( y \right) > 0,\ y \in (0,\ a)$$
 $$h'\left( y \right) < 0,y \in (a,1)$$
 
-Namely,\
+Namely
 - `h(y)` monotically increase at `(0, a)` and monotically decrease at `(a, 1)`
-- $$where\ a\ is\ a\ constant\ and\ 1 > a > 0.5\ $$
+  - where `a` is a constant and `1 > a > 0.5`
 
 Obviously:\
 $$h\left( 0.5 \right) = 0$$
@@ -664,8 +664,8 @@ $$g\left( y \right) < 0\ \forall\ y \in \left( 0,\ 0.5 \right),\ g\left( y \righ
 Namely,\
 $$f'\left( y \right) < 0\ \forall\ y \in \left( 0,\ 0.5 \right),\ f'\left( y \right) = 0\ for\ y = 0.5,\ f'\left( y \right) > 0\ \forall\ y \in (0.5,\ 1)$$
 
-Namely,\
-- `f(y)` monotically decrease at `(0, 0.5)` and monotically increase at `(0.5, 1)`
+Namely: 
+`f(y)` monotically decrease at `(0, 0.5)` and monotically increase at `(0.5, 1)`
 
 Therefore,\
 $$\min{f\left( y \right)} = f\left( 0.5 \right)$$
@@ -673,8 +673,8 @@ $$\min{f\left( y \right)} = f\left( 0.5 \right)$$
 Therefore,\
 $$1 - \ e^{- \ \frac{x}{b}} = 0.5$$
 
-So,\
-- $$x = ln2*b$$
-- $$p\left( \text{false_positive_of_x} \right) \leq \ \left( \frac{1}{2} \right)^{(ln2)b},\ \forall\ x \notin S$$
+So
+- $x = ln2*b$
+- $p\left( \text{false_positive_of_x} \right) \leq \ \left( \frac{1}{2} \right)^{(ln2)b},\ \forall\ x \notin S$
 
 In all, when number of hash functions $K = ln2 * b$ ($b$ is number of bits allocated per object key), ($ln2 = ~0.693$). Then, Bloom Filter's FPR for new insert $x$ is at its minimum (assume S is inserted already).

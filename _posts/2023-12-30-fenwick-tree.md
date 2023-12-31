@@ -35,6 +35,8 @@ suppose
 - the opeartion is still mathematical sum
 - the goal is to update `A[3]`
 
+
+we do the following:
 - update `3 = 0011` that is `B[3]`. use `k = k + k & -k` trick to add `rightmost 1 = 0001` to `0011` to get an exlusive subpath, `0100 = 4`.
 - update `4 = 0100` that is `B[4]`. add `rightmost 1 = 0100` to `0100` to get an exlusive subpath, `1000 = 8`.
 - update `8 = 1000` that is `B[8]`. we reach the length of `A` and has completed the point update for all possible subpaths.

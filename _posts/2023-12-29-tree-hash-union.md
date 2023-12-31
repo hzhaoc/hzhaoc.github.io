@@ -16,7 +16,7 @@ It supports `O(1)` maximum/minimum value look up, `O(logn)` maximum value deleti
 A type of priority queue. 
 
 ### Property 
-Parent is bigger than its children
+Parent is bigger than its children.
 
 ### Advantages
 - Efficient data structure when dealing with min/max due to $O(logn)$ operations in insertion and popping (root/first element which is min or max)

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Random Walk in Finance"
+title:  "Random Walk"
 date:   2023-12-28 00:10:00 -0800
 brief: '"heroes are heroes because they are heroic in behavior, not because they won or lost."'
 ---

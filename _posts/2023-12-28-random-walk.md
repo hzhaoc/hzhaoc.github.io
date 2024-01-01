@@ -5,12 +5,12 @@ date:   2023-12-28 00:10:00 -0800
 brief: '"When things go our way we reject the lack of certainty."'
 ---
 
-A Wiener Process application in natural gas price movement. 
+A random walk application in natural gas price movement. 
 
 ```python
 class ItoMC:
 	"""
-	Monte-Carlo simulation of natural gas monthly Fowward contracts, based on Ito's lemma and Generalized Wiener process
+	Monte-Carlo simulation of natural gas monthly forward contracts, based on Generalized Wiener process
 	params: 
 	- price: fowrad gas market price at specific date. dtype: pd.series, index of forward months, and name of that date
 	- pca: MxN pca where M is number of forward months, and N is number of (loading) factors

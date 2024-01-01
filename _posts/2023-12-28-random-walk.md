@@ -2,10 +2,10 @@
 layout: post
 title:  "Random Walk"
 date:   2023-12-28 00:10:00 -0800
-brief: '"heroes are heroes because they are heroic in behavior, not because they won or lost."'
+brief: '"When things go our way we reject the lack of certainty."'
 ---
 
-"When things go our way we reject the lack of certainty."
+A weiner process application in natural gas price movement. 
 
 ```python
 class ItoMC:

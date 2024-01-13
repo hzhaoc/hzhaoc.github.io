@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Fenwick Tree"
+title:  "Fenwick Tree & Segment Tree"
 date:   2023-12-30 15:25:00 -0800
 brief: 'a glimpse into competitive programming'
 ---
@@ -225,3 +225,172 @@ class Bit:
             k -= k & -k
         return s
 ```
+
+
+
+# Segment Tree
+Segment Tree serves a similar purpose to Fenwick Tree: it provides efficient range operation of some sort. Each node has a value that is a merged of some sort (e.g. sum) from its children nodes. 
+
+### Point Update & Range Query
+Here's an implementation. 
+
+```python
+class SegTree:
+    def __init__(self, n):
+        self.root = self._init(0, n-1)
+
+    def _init(self, l, r):
+        node = Node(0, l, r)
+        if l==r:
+            return node
+        node.left = self._init(node.l, node.m)
+        node.right = self._init(node.m+1, node.r)
+        return node
+    
+    def get(self, l, r):
+        return self._get(self.root, l, r)
+
+    def _get(self, node, l, r):
+        # (l, r) <= (node.l, node.r)
+        if node.l == node.r:
+            return node.v
+        if node.l == l and node.r == r:  
+            # this makes get O(logn)
+            return node.v
+        if node.m+1 <= l:
+            return self._get(node.right, l, r)
+        if node.m >= r:
+            return self._get(node.left, l, r)
+        return self._get(node.left, l, node.m) + self._get(node.right, node.m+1, r)
+
+    def set(self, i, v):
+        self._set(self.root, i, v)
+
+    def _set(self, node, i, v):
+        if node.l == node.r:
+            dv = v - node.v
+            node.v = v
+            return dv
+        dv = 0
+        if node.m >= i:
+            dv = self._set(node.left, i, v)
+        else:
+            dv = self._set(node.right, i, v)
+        node.v += dv
+        return dv
+
+
+class Node:
+    def __init__(self, v, l, r):
+        self.v = v
+        self.l = l
+        self.r = r
+        self.m = (l+r)>>1
+        self.left = None
+        self.right = None
+```
+
+Here's an array implementation of the above node approach. Note `set` is a range set. Sometimes if we need to fast non-repeatable range set operation, such as set 0s to 1s for a range (you don't want to reset a range of 1s to 1s.. that's a waste of time), this comes useful.
+```python
+class Seg:
+    def __init__(self, n):
+        # 1-indexed
+        self.n = 1 << math.ceil(math.log(n, 2)+1)
+        self.k = n
+        self.b = [0]*self.n
+
+    def add(self, j, v):
+        self._add(self, b, 1, 1, self.k, j, v)
+
+    def _add(self, b, i, l, r, j, v):
+        # j is in [l, r]
+        if l == L and r == R:
+            dv = v - b[i]
+            b[i] = v
+            return dv
+        m = (l+r)>>1
+        if m >= j:
+            dv = self._get(b, i<<1, l, m, j, v)
+        else:
+            dv = self._get(b, i<<1|1, m+1, r, j, v)
+        b[i] += dv
+        return dv
+
+    def set(self, l, r):
+        # range set 0s to 1s
+        # [l, r]
+        return self._set(self.b, 1, 1, self.k, l, r)
+    
+    def _set(self, b, i, l, r, L, R):
+        # [L, R] <= [l, r]
+        cap = r-l+1
+
+        if b[i] == cap:
+            return 0
+
+        if l == r:
+            b[i] = 1
+            return 1
+
+        m = (l+r)>>1
+        ld, rd = 0, 0
+        if m >= R:
+            ld = self._set(b, i<<1, l, m, L, R)
+        elif m+1 <= L:
+            rd = self._set(b, i<<1|1, m+1, r, L, R)
+        else:
+            ld = self._set(b, i<<1, l, m, L, m)
+            rd = self._set(b, i<<1|1, m+1, r, m+1, R)
+            
+        b[i] += ld+rd
+        return ld+rd
+
+    def get(self, l, r):
+        return self._get(self.b, 1, 1, self.k, l, r)
+
+    def _get(self, b, i, l, r, L, R):
+        # [L, R] <= [l, r]
+        if l == L and r == R:
+            return b[i]
+
+        m = (l+r)>>1
+        if m >= R:
+            return self._get(b, i<<1, l, m, L, R)
+        elif m+1 <= L:
+            return self._get(b, i<<1|1, m+1, r, L, R)
+        return self._get(b, i<<1, l, m, L, m) + self._get(b, i<<1|1, m+1, r, m+1, R)
+        
+```
+
+Here's a variant of array implementation. This variant is iterative and bottom-up on array. It works only on point update. 
+```python
+class SegArr:
+    def __init__(self, A):
+        self.n = len(A)
+        self.t = [0]*n + A
+        for i in range(self.n-1, -1, -1):
+            self.t[i] += self.t[i<<1] + self.t[t<<1|1]
+    
+    def get(self, i, j):
+        i += self.n
+        j += self.n
+        res = 0
+        while i <= j:
+            if i & 1:
+                res += self.t[i]
+                i += 1
+            i >>= 1
+            if not (j & 1):
+                res += self.t[j]
+                j -= 1
+            j >>= 1
+        return res
+
+    def set(self, i, v):
+        i += self.n
+        dv = v - self.t[i]
+        while i > 0:
+            self.t[i] += dv
+            i >>= 1
+```
+

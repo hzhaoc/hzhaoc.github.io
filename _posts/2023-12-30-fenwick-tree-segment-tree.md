@@ -5,6 +5,8 @@ date:   2023-12-30 15:25:00 -0800
 brief: 'a glimpse into competitive programming'
 ---
 
+*All for range operations*
+
 Fenwick tree, also named binary indexed tree (BIT), is a collection of values, used to do efficient set of operations for either one of the following 3 sets:
 - classic:  point update O(logn) & range query  O(logn)
 - variant1: point query  O(logn) & range update O(logn)

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Fenwick Tree & Segment Tree"
-date:   2023-12-30 15:25:00 -0800
+date:   2024-01-14 19:50:00 -0800
 brief: 'a glimpse into competitive programming'
 ---
 
@@ -67,7 +67,7 @@ class Bit:
         self.n = n
         self.b = [0] * (n+1)
     
-    def rangeQuery(self, r, l):
+    def rangeQuery(self, l, r):
         return self.presum(r) - self.presum(l-1)
 
     def presum(self, k):
@@ -80,11 +80,11 @@ class Bit:
     def pointUpdate(self, k, diff):
         while k <= self.n:
             self.b[k] += diff
-            k == k & -k
+            k += k & -k
         return
 ```
 
-#### 2D Form
+### Point Update & Range Query: Variant 1: 2D Range Query
 To do range query and point update in a 2D array. For example, we want to do efficient element update and presum for a matrix `A`, where presum for `A[I][J]` is sum of all `A[i][j]` where `0 <= i <= I and 0 <= j <= J for all possible i, j`.
 \
 Now in the binary indexed tree, 
@@ -126,6 +126,92 @@ class Bit:
             while y <= self.m:
                 self.b[i][y] += v
                 y += y & -y
+            i += i & -i
+```
+
+### Point Update & Range Query: Variant 2: range sum for different kinds
+It is better to directly look at an example. 
+\
+
+> LeetCode 673, Number of Longest Increasing Subsequence: Given an integer array `nums`, return the number of longest increasing subsequences. Notice that the sequence has to be strictly increasing.
+
+\
+It is doable in `O(n^2)` with dp: to find count of max length for subarray ending at `i`, we check count and max len for each subarray ending at `j` where `j < i`, and update it for `i`:
+- if `nums[j] < nums[i]`: (note `length[i]` initialized to be `0`)
+  - if `length[j]+1 == length[i]`: `count[i] += count[j]`
+  - if `length[j]+1 > length[i]` : `count[i] = count[j]`, `length[i] = length[j]+1`
+\
+finally we loop through `length` and `count` arrays and can find sum of count for max length.
+
+Complete code:
+```python
+# O(n^2)
+    def findNumberOfLIS1(self, A: List[int]) -> int:
+        n = len(A)
+        l = [0]*n
+        c = [0]*n
+        res = 0
+        mal = 0
+        for i in range(n):
+            l[i] = 1
+            c[i] = 1
+            for j in range(i):
+                if A[j] < A[i]:
+                    if l[j]+1 == l[i]:
+                        c[i] += c[j]
+                    elif l[j]+1 > l[i]:
+                        c[i] = c[j]
+                        l[i] = l[j]+1
+            if mal < l[i]:
+                mal = l[i]
+                res = c[i]
+            elif mal == l[i]:
+                res += c[i]
+        return res
+```
+
+To save time on the inner loop, a bit variant is used here - in the bit, it stores two trees: one for max length for each pos, one for count for each pos. 
+```python
+    def findNumberOfLIS(self, A: List[int]) -> int:
+        # for same value, bigger index should be visited earlier than smaller index, because it is string increasing sequence we want
+        A = sorted([[a, i+1] for i, a in enumerate(A)], key = lambda x: [x[0], -x[1]])
+        n = len(A)
+        b = Bit(n)
+        for a, i in A:
+            l, c = b.get(i-1)
+            if l == 0:
+                c = 1
+            b.set(i, l+1, c)
+        return b.get(n)[1]
+
+
+class Bit:
+    def __init__(self, n):
+        self.n = n
+        self.l = [0]*(n+1)
+        self.c = [0]*(n+1)
+
+    def get(self, i):
+        # get sum of cnt c for range (1, i) for max len l
+        l = 0
+        c = 0
+        while i > 0:
+            if self.l[i] > l:
+                l = self.l[i]
+                c = self.c[i]
+            elif self.l[i] == l:
+                c += self.c[i]
+            i -= i & -i
+        return l, c
+
+    def set(self, i, l, c):
+        # add cnt c for len l at pos i
+        while i <= self.n:
+            if self.l[i] == l:
+                self.c[i] += c
+            elif self.l[i] < l:
+                self.l[i] = l
+                self.c[i] = c
             i += i & -i
 ```
 
@@ -209,7 +295,7 @@ class Bit:
         self.add(self.b1, l, v)
         self.add(self.b1, r+1, -v)
         self.add(self.b2, l, v*(l-1))
-        self.add(self.b2, r+1, v*(l-1) - v*r)
+        self.add(self.b2, r+1, -v*r)
 
     def add(self, b, k, diff):
         # add diff to k and subpaths above
@@ -396,3 +482,251 @@ class SegArr:
             i >>= 1
 ```
 
+
+### application: Dynamic Segment Tree
+An advantage of node-structured segment tree is it does not have to create sub-segments at initialization, different from its list implmeention or binary indexed array-based tree. It is useful when length of a segment tree is too large to completely build upfront and/or when it is beneficial to collapse two sub-segments into a parent segment to save space and time. I took an example from LeetCode which I think is classic to me:
+
+> LeetCode 715. Range Module
+
+> A Range Module is a module that tracks ranges of numbers. Design a data structure to track the ranges represented as half-open intervals and query about them.
+
+> A half-open interval [left, right) denotes all the real numbers x where left <= x < right.
+
+> Implement the RangeModule class:
+
+> RangeModule() Initializes the object of the data structure.
+> void addRange(int left, int right) Adds the half-open interval [left, right), tracking every real number in that interval. Adding an interval that partially overlaps with currently tracked numbers should add any numbers in the interval [left, right) that are not already tracked.
+> boolean queryRange(int left, int right) Returns true if every real number in the interval [left, right) is currently being tracked, and false otherwise.
+> void removeRange(int left, int right) Stops tracking every real number currently being tracked in the half-open interval [left, right).
+
+> Constraints:
+
+> 1 <= left < right <= 10^9
+> At most 104 calls will be made to addRange, queryRange, and removeRange.
+
+In this example, if we build a range-query and update based tree completely at initialization, we need to store an array of at least `2*10^9` which is big. So we start with a segment tree with empty intervals, and build only necessary intervals as queries come and go, and collapse sub-intervals into parent when condition is met for optimization. 
+
+#### code
+```python
+class RangeModule:
+
+    def __init__(self):
+        self.b = SL()
+        # self.b = Seg(1, 10**9)
+
+    def addRange(self, left: int, right: int) -> None:
+        self.b.set(left, right)
+
+    def queryRange(self, left: int, right: int) -> bool:
+        return self.b.get(left, right)
+
+    def removeRange(self, left: int, right: int) -> None:
+        self.b.unset(left, right)
+
+
+class Node:
+    def __init__(self, l, r, v):
+        self.l = l
+        self.r = r
+        self.set = v  # 1 means all covered
+        self.left = None
+        self.right = None
+
+class Seg:
+    def __init__(self, l, r):
+        self.root = Node(l, r, 0)
+
+    def set(self, l, r):
+        self._set(self.root, l, r)
+
+    def unset(self, l, r):
+        self._unset(self.root, l, r)
+
+    def _set(self, node, l, r):
+        # [l, r) is in [node.l, node.r)
+
+        # whole block is set
+        if node.set:
+            return
+        
+        # sub-block to set
+        if l == node.l and r == node.r:
+            node.set = 1
+            node.left = None
+            node.right = None
+            return
+        
+        # not whole block is set; create sub-blocks for (l, r)
+        m = (node.l+node.r)>>1
+        if m >= r:
+            self._node(node, 1, 0)
+            self._set(node.left, l, r)
+        elif m <= l:
+            self._node(node, 0, 0)
+            self._set(node.right, l, r)
+        else:
+            self._node(node, 1, 0)
+            self._set(node.left, l, m)
+            self._node(node, 0, 0)
+            self._set(node.right, m, r)
+        
+        # if both children are set - collapse into this root
+        if node.left and node.left.set and node.right and node.right.set:
+            node.left = None
+            node.right = None
+            node.set = 1
+
+    def _unset(self, node, l, r):
+        # [l, r) is in [node.l, node.r)
+
+        # range covers the block. unset it and return 1 to indicate this block is completely unset (for node collapsing)
+        if l == node.l and r == node.r:
+            node.set = 0
+            node.left = None
+            node.right = None
+            return 1
+
+        # range is in some sub-blocks
+        # - unset and remove fully-unset sub-blocks the range covers
+        # - create fully-set sub-blocks the range does not cover
+        # - this set block bit has to be 0
+
+        m = (node.l+node.r)>>1
+        fullyUnsetLeft = 0
+        fullyUnsetRight = 0
+        if node.set:
+            self._node(node, 1, 1)
+            self._node(node, 0, 1)
+            if m >= r:
+                fullyUnsetLeft = self._unset(node.left, l, r)
+            elif m <= l:
+                fullyUnsetRight = self._unset(node.right, l, r)
+            else:
+                fullyUnsetLeft = self._unset(node.left, l, m)
+                fullyUnsetRight = self._unset(node.right, m, r)
+        else:
+            if m >= r:
+                fullyUnsetLeft = not node.left or self._unset(node.left, l, r)
+            elif m <= l:
+                fullyUnsetRight = not node.right or self._unset(node.right, l, r)
+            else:
+                fullyUnsetLeft = not node.left or self._unset(node.left, l, m)
+                fullyUnsetRight = not node.right or self._unset(node.right, m, r)
+
+        node.set = 0
+
+        if fullyUnsetLeft:
+            node.left = None
+        if fullyUnsetRight:
+            node.right = None
+        if fullyUnsetLeft and fullyUnsetRight:
+            return 1
+        return 0
+
+    def get(self, l, r):
+        return self._get(self.root, l, r)
+
+    def _get(self, node, l, r):
+        # [l, r) is in [node.l, node.r)
+
+        # this block is fully set -> 1
+        if node.set:
+            return 1
+
+        # this block is fully unset -> 0
+        if not node.left and not node.right:
+            return 0
+
+        # this block is partially set (it has set children not collapsed), and range covers block -> 0
+        if l == node.l and r == node.r:
+            return 0
+        
+        # this block is partially set, and range is in some sub-blocks -> check sub-blocks
+        m = (node.l+node.r)>>1
+        if m >= r:
+            return node.left and self._get(node.left, l, r)
+        if m <= l:
+            return node.right and self._get(node.right, l, r)
+        return node.left and self._get(node.left, l, m) and node.right and self._get(node.right, m, r)
+
+    def _node(self, node, isLeft, setBit):
+        m=(node.l+node.r)>>1
+        if isLeft and not node.left:
+            node.left = Node(node.l,m,setBit)
+        if not isLeft and not node.right:
+            node.right = Node(m,node.r,setBit)
+```
+
+##### bit vs segment tree vs balanced BST, (or SortedList in python)
+I've been playing around with bit, seg tree and balanced bst recently, in many cases they are interswtichable because they serve similar purpose: range query and point update or limited range update. I usually go with bit because I saw slightly faster perforamnce with it and its code is more concise relatively speaking. 
+
+segment tree is also handy. it's dynamic tree is sometimes a bit hard to grasp and requires lots of trivial coding in interviews. but it is still very powerful.
+
+"SortedList" , or balanced BST is most intuive and most implementation-complexity hidden because of its complexity. therefore for programming contest, if there's a use case to directly use it i would suggest so. Here's an application of `sorted List` for the above application `range module`
+
+```python
+class SL:
+    def __init__(self):
+        from sortedcontainers import SortedList
+        self.sl = SortedList()
+
+    def set(self, l, r):
+        sl = self.sl
+        i = sl.bisect_left((l,l))
+        j = sl.bisect_right((r,r))
+        if i and sl[i-1][1] >= l:
+            i -= 1
+        if j<len(sl) and sl[j][0] <= r:
+            j += 1
+        if i == j:
+            sl.add((l, r))
+            # print('after add', sl)
+            return
+        toRmv = []
+        for ll, rr in sl[i:j]:
+            l = min(l, ll)
+            r = max(r, rr)
+            toRmv.append((ll, rr))
+        for ll, rr in toRmv:
+            sl.remove((ll, rr))
+        sl.add((l, r))
+        # print('after add', sl)
+
+    def unset(self, l, r):
+        sl = self.sl
+        i = sl.bisect_left((l,l))
+        j = sl.bisect_right((r,r))
+        if i and sl[i-1][1] >= l:
+            i -= 1
+        if j<len(sl) and sl[j][0] <= r:
+            j += 1
+        if i == j:
+            return
+        toRmv = []
+        toAdd = []
+        if sl[j-1][1] > r:
+            toAdd.append((r, sl[j-1][1]))
+        if sl[i][0] < l:
+            toAdd.append((sl[i][0], l))
+        for ll, rr in sl[i:j]:
+            toRmv.append((ll, rr))
+        for ll, rr in toRmv:
+            sl.remove((ll, rr))
+        for ll, rr in toAdd:
+            sl.add((ll, rr))
+        # print('after remove', sl)
+
+    def get(self, l, r):
+        sl = self.sl
+        i = sl.bisect_left((l,l))
+        if i and sl[i-1][1] > l:
+            i -= 1
+        j = sl.bisect_right((r,r))
+        if j<len(sl) and sl[j][0] < r:
+            j += 1
+        if i == j-1 and sl[i][0] <= l and sl[i][1] >= r:
+            # print(f'get true, {l, r} on {sl}')
+            return True
+        # print(f'get false, {l, r} on {sl}')
+        return False
+```

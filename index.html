@@ -3,7 +3,7 @@ layout: default
 ---
 
 {% for post in paginator.posts %}
-  {% if post.layout == "post" %}
+  <!-- {% if post.layout == "post" %} -->
     <section>
       <style>
         a:link    {color:#000;text-decoration:none}  /* unvisited link  */
@@ -19,7 +19,7 @@ layout: default
       
       <p>{{ post.brief | strip_html | truncate: 100 }}</p>
     </section>
-  {% endif %}
+  <!-- {% endif %} -->
 {% endfor %}
 
 {% if paginator.previous_page %}

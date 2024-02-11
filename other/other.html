@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+{% for post in paginator.others %}
+<section>
+  <style>
+    a:link    {color:#000;text-decoration:none}  /* unvisited link  */
+    a:visited {color:#800;text-decoration:none}  /* visited link    */
+    a:hover   {color:#000;text-decoration:none}  /* mouse over link */
+    a:active  {color:#000;text-decoration:none}  /* selected link   */ 
+  </style>
+  <h2>
+      <a href='{{ site.url }}{{ post.url }}' title='{{ post.title }}'>
+        {{ post.title }}
+      </a>
+  </h2>
+  
+  <p>{{ post.brief | strip_html | truncate: 100 }}</p>
+</section>
+{% endfor %}
+
+{% if paginator.previous_page %}
+<a href='{{ site.url }}{{ paginator.previous_page_path }}'>Previous</a>
+{% endif %}
+
+&mdash; {{ paginator.page }} of {{ paginator.total_pages }} &mdash;
+
+{% if paginator.next_page %}
+<a href='{{ site.url }}{{ paginator.next_page_path }}'>Next</a>
+{% endif %}

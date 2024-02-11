@@ -342,68 +342,30 @@ Union-find, or disjoint-set, is a tree structure that supports fast categorizati
     -   **Find() and Union() worse case takes O(logn)** (Find() finds the leader vertex)
 
 ## implementation
-- lazy union
 ```python
-class UnionFind:
-	"""
-	Lazy Union: In union(x, y) function, link x's root's parent to y's root
-	total work of m finds (m is # of edges) = O(m* alpha(n))
-	"""
+class Union:
+    def __init__(self, n):
+        self.p = [i for i in range(n)] # parent
+        self.r = [0 for i in range(n)] # rank for path balancing
 
-	def __init__(self, vertexes):
-		"""init union find object from list of numbered vertexes"""
-		self._vertexes = vertexes
-		self._parents = {x: x for x in self._vertexes}
-		self._ranks = {x: 1 for x in self._vertexes}
-		self._n_of_union = len(vertexes)
+    def find(self, i):
+        if self.p[i] != i:
+            return self.find(self.p[i])
+        return i
 
-	@classmethod
-	def _initfromGraph(cls, graph):
-		"""init union find object from class of graph"""
-		return cls(graph.vertexes)
-
-	def find(self, x):
-		# optimize by Path Compression
-		if x == self._parents[x]:
-			return x
-		return self.find(self._parents[x])
-
-	def union(self, x, y):
-		# optimize by Union by Rank
-		x_root = self.find(x)
-		y_root = self.find(y)
-		if x_root == y_root: # already in same group
-			return
-		self._n_of_union -= 1  # union makes number of unions decrease by 1
-		x_rank = self._ranks[x_root]
-		y_rank = self._ranks[y_root]
-		if x_rank > y_rank:  # make y root point to x root
-			self._parents[y_root] = x_root
-		elif x_rank < y_rank:  # do opposite
-			self._parents[x_root] = y_root
-		else:  # x_rank == y_rank, arbitrarily do same as x_rank > y_rank, additionally add 1 to x's root's rank
-			self._parents[y_root] = x_root
-			self._ranks[x_root] += 1
-
-	def inSameUnion(self, x, y):
-		# check if x and y belongs to same union
-		return self.find(x) == self.find(y)
-
-	@property
-	def parents(self):
-		return self._parents
-	
-	@property
-	def ranks(self):
-		return self._ranks
-	
-	@property
-	def vertexes(self):
-		return self._vertexes
-
-	@property
-	def n_of_union(self):
-		return self._n_of_union
+    def union(self, i, j):
+        ri, rj = self.find(i), self.find(j)
+        if ri == rj:
+            return
+        r = self.r
+        p = self.p
+        if r[ri] < r[rj]:
+            p[ri] = rj
+        elif r[rj] < r[ri]:
+            p[rj] = ri
+        else:
+            p[rj] = ri
+            r[ri] += 1
 ```
 
 

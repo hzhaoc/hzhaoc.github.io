@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bits"
-date:   2024-02-12 02:00:00 -0800
+date:   2025-02-12 02:00:00 -0800
 brief: 'tricks of bit manipulation'
 ---
 

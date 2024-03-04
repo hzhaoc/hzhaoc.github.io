@@ -1,12 +1,13 @@
 ---
 layout: post
 title:  "Bits"
-date:   2025-02-12 02:00:00 -0800
+date:   2024-03-04 11:00:00 -0800
 brief: 'tricks of bit manipulation'
 ---
 
 
-### right most set bit
+### tricks
+- right most set bit
 for `k`, its right most set bit is `k & -k`
 
 

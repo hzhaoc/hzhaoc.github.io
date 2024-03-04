@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Neurobiology quick notes"
+title:  "limbic system"
 date:   2024-03-03 23:30:00 -0800
 brief: ''
 ---
@@ -45,7 +45,8 @@ all limbic system does is to send signal to hypothalamus (下丘脑) to control 
   - attention allocation, reward anticipation, decision-making, impulse control (e.g. performance monitoring and error detection), and emotion, empathy, metaphorical linking
     - **mirror neuron** (on-going study for bio cause of empathy)
 
-![limbic_system.png](/assets/images/limbic-system.png)
+
+![limbic_system.png|400](/assets/images/limbic-system.png)
 
 
 ### Human sexual behavior

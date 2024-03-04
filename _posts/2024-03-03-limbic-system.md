@@ -5,6 +5,7 @@ date:   2024-03-03 23:30:00 -0800
 brief: ''
 ---
 
+key takeaways from Robert Sapolsky
 
 ### Evolution Behavior
 3 building blocks:
@@ -44,9 +45,8 @@ all limbic system does is to send signal to hypothalamus (下丘脑) to control 
 - **anterior cingulate cortex | ACC | 前扣带回**
   - attention allocation, reward anticipation, decision-making, impulse control (e.g. performance monitoring and error detection), and emotion, empathy, metaphorical linking
     - **mirror neuron** (on-going study for bio cause of empathy)
-
-
-![limbic_system.png|400](/assets/images/limbic-system.png)
+![limbicsystem.png|400](/assets/images/limbic-system.png)
+![limbicsystem.png|400](/assets/images/limbic%20system.png)
 
 
 ### Human sexual behavior

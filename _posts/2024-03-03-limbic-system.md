@@ -1,11 +1,10 @@
 ---
 layout: post
-title:  "limbic system"
+title:  "Limbic System"
 date:   2024-03-03 23:30:00 -0800
-brief: ''
+brief: 'key takeaways from Robert Sapolsky'
 ---
 
-key takeaways from Robert Sapolsky
 
 ### Evolution Behavior
 3 building blocks:
